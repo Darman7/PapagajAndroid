@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:minHeight="30dp"
+    android:minWidth="30dp" >
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="1078dp" >
+
+        <TextView
+            android:id="@+id/textViewKONOBAR"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="51dp"
+            android:layout_marginTop="61dp"
+            android:text="Konobar: "
+            android:textAppearance="?android:attr/textAppearanceLarge" />
+
+        <TableLayout
+            android:id="@+id/tableForButtons"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@+id/textViewKONOBAR"
+            android:layout_marginTop="40dp" >
+            
+        </TableLayout>
+
+        <Button
+            android:id="@+id/buttonBrzaPorudzba"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBaseline="@+id/textViewKONOBAR"
+            android:layout_alignBottom="@+id/textViewKONOBAR"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="75dp"
+            android:text="Brza porudzba" />
+
+        <Button
+            android:id="@+id/buttonLogout"
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/buttonBrzaPorudzba"
+            android:layout_alignParentLeft="true"
+            android:text="&lt;"
+            android:textSize="26sp" />
+
+    </RelativeLayout>
+    
+</ScrollView>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+            <Button
+                android:id="@+id/buttonBrzaPorudzba"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/textViewKONOBAR"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="30dp"
+                android:text="Brza porudzba" />
+
+            <Button
+                android:id="@+id/buttonLogout"
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:text="&lt;"
+                android:textSize="26sp" />
+
+            <ScrollView
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/buttonBrzaPorudzba"
+                android:maxHeight="15dp"
+                android:minWidth="30dp"
+                android:layout_marginTop="40dp">
+
+                <TableLayout
+                    android:id="@+id/tableForButtons"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentLeft="true"
+                    android:layout_below="@+id/textViewKONOBAR"
+                     >
+                </TableLayout>
+            </ScrollView>
+
+            <TextView
+                android:id="@+id/textViewKONOBAR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/buttonLogout"
+                android:layout_alignBottom="@+id/buttonLogout"
+                android:layout_marginLeft="36dp"
+                android:layout_toRightOf="@+id/buttonLogout"
+                android:text="Konobar: "
+                android:textAppearance="?android:attr/textAppearanceLarge" />
+    
+</RelativeLayout>

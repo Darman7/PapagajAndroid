@@ -1,19 +1,34 @@
 package com.darmanoid.papagajrestaurant4waiters;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
- 
 public class LoginActivity extends Activity {
+	
+	InputStream is=null;
+	String result=null;
+	String line=null;
 	
 	private EditText username;
 	private Button login;
@@ -25,6 +40,10 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+        
         setupVariables(); //ID textfield-a i login buttona
         
     }
@@ -55,34 +74,88 @@ public class LoginActivity extends Activity {
     }
     
     
+    
+    
     private boolean autentifikacija()
     {
+    	//ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
+ 
+    	//nameValuePairs.add(new BasicNameValuePair("id",id));
     	boolean postoji=false;
-    	 TestAdapter mDbHelper = new TestAdapter(getBaseContext()); //Context 
-         mDbHelper.createDatabase();
-         mDbHelper.open();
-         
-         Cursor korisnici = mDbHelper.getImenaKorisnika();
+    	try
+    	{
+    		HttpClient httpclient = new DefaultHttpClient();
+	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/korisnik.php");
+	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	        HttpResponse response = httpclient.execute(httppost); 
+	        HttpEntity entity = response.getEntity();
+	        is = entity.getContent();
+	        Log.e("pass 1", "connection success ");
+    	}
+        catch(Exception e)
+        {
+        	Log.e("Fail 1", e.toString());
+	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
+			Toast.LENGTH_LONG).show();
+        }     
+        
+        try
+        {
+         	BufferedReader reader = new BufferedReader
+				(new InputStreamReader(is,"iso-8859-1"),8);
+            	StringBuilder sb = new StringBuilder();
+            	while ((line = reader.readLine()) != null)
+		{
+       		    sb.append(line + "\n");
+           	}
+            	is.close();
+            	result = sb.toString();
+            	Log.i("izgled:",result);
+	        Log.e("pass 2", "connection success ");
+		}
+	        catch(Exception e)
+	    	{
+			Log.e("Fail 2", e.toString());
+		}     
        
-         Info konobar=new Info();
-         int ukupno = korisnici.getCount();
-         for(int i=1; i<=ukupno; i++)
-         {
-        	
-        	
-        	if(username.getText().toString().equals(korisnici.getString(2)))
-        	{
-        		postoji=true;
-        		Info.konobarID=korisnici.getString(4);
-        		Toast.makeText(getApplicationContext(), "Ulogovani ste kao:"+korisnici.getString(1), Toast.LENGTH_LONG).show();
-        		break;
-        	}
-        	korisnici.moveToNext();
-         }
-    	return postoji;
+   
+	   	String output = "";
+		JSONObject jsonResponse;
+	
+		try {
+			jsonResponse = new JSONObject(result);
+
+			JSONArray jsonArray = jsonResponse.optJSONArray("korisnik");
+			
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject child = jsonArray.getJSONObject(i);
+				
+				String kartica = child.getString("kartica");
+				String ime=child.getString("ime");
+				if(username.getText().toString().equals(kartica)) {
+					postoji=true;
+					konobar.konobarID=ime;
+					Log.i("ime:",ime);
+					break;
+				}
+				postoji=false; //ako ponovo pokusavamo :) 
+			}
+			
+			//parsirani.setText(output);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.i("parser:","ne radi");
+		}
+		if(postoji==false) 
+			{
+				Log.i("autentifikacija"," false");
+			}
+		else Log.i("autentifikacija"," true");
+			
+		return postoji;
+		
     }
-    @Override
-	public void onBackPressed() {
-		//Da ne moze da se vrati nigdje :) 
-	}
+    
+        
 }

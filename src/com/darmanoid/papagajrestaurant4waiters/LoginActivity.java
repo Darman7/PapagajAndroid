@@ -73,20 +73,14 @@ public class LoginActivity extends Activity {
 		login = (Button) findViewById(R.id.loginBtn);
     }
     
-    
-    
-    
+
     private boolean autentifikacija()
     {
-    	//ArrayList<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
- 
-    	//nameValuePairs.add(new BasicNameValuePair("id",id));
     	boolean postoji=false;
     	try
     	{
     		HttpClient httpclient = new DefaultHttpClient();
 	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/korisnik.php");
-	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	        HttpResponse response = httpclient.execute(httppost); 
 	        HttpEntity entity = response.getEntity();
 	        is = entity.getContent();
@@ -101,25 +95,23 @@ public class LoginActivity extends Activity {
         
         try
         {
-         	BufferedReader reader = new BufferedReader
+         		BufferedReader reader = new BufferedReader
 				(new InputStreamReader(is,"iso-8859-1"),8);
             	StringBuilder sb = new StringBuilder();
             	while ((line = reader.readLine()) != null)
-		{
-       		    sb.append(line + "\n");
-           	}
+            	{
+            		sb.append(line + "\n");
+           		}
             	is.close();
             	result = sb.toString();
-            	Log.i("izgled:",result);
-	        Log.e("pass 2", "connection success ");
+            	//Log.i("izgled:",result);
+            	Log.e("pass 2", "connection success ");
 		}
-	        catch(Exception e)
-	    	{
-			Log.e("Fail 2", e.toString());
+	    catch(Exception e)
+	    {
+	    		Log.e("Fail 2", e.toString());
 		}     
-       
    
-	   	String output = "";
 		JSONObject jsonResponse;
 	
 		try {
@@ -135,7 +127,7 @@ public class LoginActivity extends Activity {
 				if(username.getText().toString().equals(kartica)) {
 					postoji=true;
 					konobar.konobarID=ime;
-					Log.i("ime:",ime);
+					//Log.i("ime:",ime);
 					break;
 				}
 				postoji=false; //ako ponovo pokusavamo :) 
@@ -145,17 +137,13 @@ public class LoginActivity extends Activity {
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			Log.i("parser:","ne radi");
+			Log.i("parser Login:","ne radi");
 		}
-		if(postoji==false) 
-			{
-				Log.i("autentifikacija"," false");
-			}
-		else Log.i("autentifikacija"," true");
-			
 		return postoji;
-		
     }
-    
+    @Override
+    public void onBackPressed() {
+       
+    }
         
 }

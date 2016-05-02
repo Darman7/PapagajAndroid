@@ -2,14 +2,27 @@ package com.darmanoid.papagajrestaurant4waiters;
 
 
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
+import android.widget.Toast;
 
 public class RegioniActivity extends Activity{
 	
@@ -17,6 +30,10 @@ public class RegioniActivity extends Activity{
 	 *  Stolovi se prikazuju u dva taba
 	 */
 	Info info;
+	InputStream is=null;
+	String result=null;
+	String line=null;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -32,29 +49,73 @@ public class RegioniActivity extends Activity{
         // Da mi ne prikazuje ime aplikacije
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-        
-        //Dinamicki po DUjovim instrukcijama :) 
-        //Prvo procitati imena iz baze
-        
-        TestAdapter mDbHelper = new TestAdapter(this); //Context 
-        mDbHelper.createDatabase();
-        mDbHelper.open();
-        
-        Cursor regioni = mDbHelper.getRegioni();
-        
-        Info konobar=new Info();
-        int ukupno = regioni.getCount();
-        for(int i=1; i<=ukupno; i++)
+
+       
+        //Citanje baze:        
+        try
+    	{
+    		HttpClient httpclient = new DefaultHttpClient();
+	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/region.php");
+	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	        HttpResponse response = httpclient.execute(httppost); 
+	        HttpEntity entity = response.getEntity();
+	        is = entity.getContent();
+	        Log.e("pass 1", "connection success ");
+    	}
+        catch(Exception e)
         {
-        	ActionBar.Tab noviTab;
-        	noviTab=actionBar.newTab().setText(regioni.getString(1));
-        	
-        	Fragment noviFragment = new FragmentTab(regioni.getString(0)); 
-        	noviTab.setTabListener(new TabListener(noviFragment));
-        	actionBar.addTab(noviTab);
-       		
-       	regioni.moveToNext();
-        }
+        	Log.e("Fail 1", e.toString());
+	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
+			Toast.LENGTH_LONG).show();
+        }     
+        
+        try
+        {
+         	BufferedReader reader = new BufferedReader
+				(new InputStreamReader(is,"iso-8859-1"),8);
+            	StringBuilder sb = new StringBuilder();
+            	while ((line = reader.readLine()) != null)
+		{
+       		    sb.append(line + "\n");
+           	}
+            	is.close();
+            	result = sb.toString();
+            	//Log.i("izgled:",result);
+            	Log.e("pass 2", "connection success ");
+		}
+	        catch(Exception e)
+	    	{
+			Log.e("Fail 2", e.toString());
+		}     
+       
+		JSONObject jsonResponse;
+	
+		try {
+			jsonResponse = new JSONObject(result);
+
+			JSONArray jsonArray = jsonResponse.optJSONArray("region");
+			
+			for (int i = 0; i < jsonArray.length(); i++) {
+				JSONObject child = jsonArray.getJSONObject(i);
+				
+				String reg_id = child.getString("region_id");
+				String naziv=child.getString("naziv");
+				//UBACIVANJE NOVIH TABOVA! :) 
+				ActionBar.Tab noviTab;
+	        	noviTab=actionBar.newTab().setText(naziv);
+	        	
+	        	Fragment noviFragment = new FragmentTab(reg_id); 
+	        	noviTab.setTabListener(new TabListener(noviFragment));
+	        	actionBar.addTab(noviTab);
+			}
+			
+			//parsirani.setText(output);
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			Log.i("parser:","ne radi");
+		}
+		
 	}
 	@Override
 	public void onBackPressed() {

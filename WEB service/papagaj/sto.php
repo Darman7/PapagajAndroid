@@ -1,7 +1,7 @@
 <?php
  
 /*
- * Korisnici
+ * Stolovi:
  */
  
 // array for JSON response
@@ -14,20 +14,22 @@ require_once __DIR__ . '\db_connect.php';
 $db = new DB_CONNECT();
  
 // get all products from products table
-$result = mysql_query("SELECT ime,kartica FROM korisnik") or die(mysql_error());
+$id=$_REQUEST['id'];
+$result = mysql_query("SELECT sto_id,naziv FROM sto where region_id='$id'") or die(mysql_error());
  
 // check for empty result
+
 if (mysql_num_rows($result) > 0) 
 {
-    $response["korisnik"] = array();
+    $response["sto"] = array();
  
     while ($row = mysql_fetch_array($result)) 
 	{
         $product = array(
-          'ime' => utf8_decode($row['ime']),
-          'kartica'=>utf8_decode($row['kartica']),
+          'sto_id' => utf8_decode($row['sto_id']),
+          'naziv'=>utf8_decode($row['naziv']),
          );
-        array_push($response["korisnik"], $product);
+        array_push($response["sto"], $product);
     }
     // success
     //$response["success"] = 1;

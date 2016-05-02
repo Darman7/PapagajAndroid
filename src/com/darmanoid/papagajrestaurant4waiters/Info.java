@@ -6,6 +6,7 @@ public class Info {
 	 */
 	public static String konobarID;
 	public static String stoNaziv;
+	public static String grupaIDstr;
 	
 	public static int stoID;
 	public static int grupaID=-1;

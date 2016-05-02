@@ -1,12 +1,27 @@
 package com.darmanoid.papagajrestaurant4waiters;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
@@ -14,6 +29,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.widget.AdapterView.OnItemClickListener;
 
 public class MenuGrupeActivity extends Activity{
@@ -25,16 +41,16 @@ public class MenuGrupeActivity extends Activity{
 	Button ponisti;
 	Button vratiSe;
 	Info menu;
+	InputStream is=null;
+	String result=null;
+	String line=null;
+	String[] id=null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
      super.onCreate(savedInstanceState);
      setContentView(R.layout.menu);
-     TestAdapter mDbHelper = new TestAdapter(this); //Context 
-     mDbHelper.createDatabase();
-     mDbHelper.open();
      
-
      stoIme = (TextView) findViewById(R.id.textViewStoID);
      stoIme.setText(Info.stoNaziv);// Za prosledjivanje imena stola
      
@@ -64,7 +80,7 @@ public class MenuGrupeActivity extends Activity{
 			}
      });
      
-	 ArrayList array_list = mDbHelper.getAllGrupe();
+	 ArrayList array_list = getAllGrupe();
 	 ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1, array_list);
 	      
 	 obj = (ListView)findViewById(R.id.listView1);
@@ -73,12 +89,13 @@ public class MenuGrupeActivity extends Activity{
 	         @Override
 	         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
 	            // TODO Auto-generated method stub
-	            int id_To_Search = arg2 + 1;
+	            //int id_To_Search = arg2 + 1;
+	            //Bundle dataBundle = new Bundle();
+	            //dataBundle.putInt("id", id_To_Search);
+	            //Info.grupaID=id_To_Search;
 	            
-	            Bundle dataBundle = new Bundle();
-	            dataBundle.putInt("id", id_To_Search);
-	            Info.grupaID=id_To_Search; 
-	           
+	            Info.grupaIDstr=id[arg2];
+	            //Log.i("moj niz:",Info.grupaIDstr);
 	            Intent nextScreen = new Intent(getApplicationContext(), MenuStavkeIzGrupeActivity.class);
                 startActivity(nextScreen);
 	         }
@@ -115,4 +132,68 @@ public class MenuGrupeActivity extends Activity{
 	    AlertDialog alert = builder.create();
 	    alert.show();
 	}
+	
+	public ArrayList<String> getAllGrupe()
+	{
+	      ArrayList<String> array_list = new ArrayList<String>();
+	      
+	      
+	         
+	         try
+	     	{
+	     		HttpClient httpclient = new DefaultHttpClient();
+	 	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/grupa.php");
+	 	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
+	 	        HttpResponse response = httpclient.execute(httppost); 
+	 	        HttpEntity entity = response.getEntity();
+	 	        is = entity.getContent();
+	 	        Log.e("pass 1", "connection success ");
+	     	}
+	         catch(Exception e)
+	         {
+	         	Log.e("Fail 1", e.toString());
+	 	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
+	 			Toast.LENGTH_LONG).show();
+	         }     
+	         
+	         try
+	         {
+	          	BufferedReader reader = new BufferedReader
+	 				(new InputStreamReader(is,"iso-8859-1"),8);
+	             	StringBuilder sb = new StringBuilder();
+	             	while ((line = reader.readLine()) != null)
+	             	{
+	        		    sb.append(line + "\n");
+	            	}
+	             	is.close();
+	             	result = sb.toString();
+	             	//Log.i("izgled:",result);
+	             	Log.e("pass 2", "connection success ");
+	 		}
+	 	        catch(Exception e)
+	 	    	{
+	 			Log.e("Fail 2", e.toString());
+	 		}     
+	        
+	 		JSONObject jsonResponse;
+	 	
+	 		try {
+	 			jsonResponse = new JSONObject(result);
+
+	 			JSONArray jsonArray = jsonResponse.optJSONArray("grupa");
+	 			id=new String[jsonArray.length()];
+	 			for (int i = 0; i < jsonArray.length(); i++) {
+	 				JSONObject child = jsonArray.getJSONObject(i);
+	 				
+	 				String reg_id = child.getString("grupa_id");
+	 				String naziv=child.getString("naziv");
+	 				id[i]=reg_id;
+	 				array_list.add(naziv);
+	 			}
+	 		} catch (Exception e) {
+	 			// TODO Auto-generated catch block
+	 			Log.i("parser menu:","ne radi");
+	 		}
+	   return array_list;
+	 }
 }

@@ -80,7 +80,7 @@ public class LoginActivity extends Activity {
     	try
     	{
     		HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/korisnik.php");
+	        HttpPost httppost = new HttpPost("http://"+konobar.ip+"/papagaj/korisnik.php");
 	        HttpResponse response = httpclient.execute(httppost); 
 	        HttpEntity entity = response.getEntity();
 	        is = entity.getContent();

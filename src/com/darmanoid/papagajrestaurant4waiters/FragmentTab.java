@@ -89,7 +89,7 @@ public class FragmentTab extends Fragment {
 		try
     	{
     		HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/sto.php?id="+this.regionID);
+	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/sto.php?id="+this.regionID);
 	        HttpResponse response = httpclient.execute(httppost); 
 	        HttpEntity entity = response.getEntity();
 	        is = entity.getContent();

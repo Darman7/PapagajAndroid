@@ -142,7 +142,7 @@ public class MenuGrupeActivity extends Activity{
 	         try
 	     	{
 	     		HttpClient httpclient = new DefaultHttpClient();
-	 	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/grupa.php");
+	 	        HttpPost httppost = new HttpPost("http://"+menu.ip+"/papagaj/grupa.php");
 	 	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();

@@ -86,10 +86,10 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	   {
 	 		ArrayList<String> array_list = new ArrayList<String>();
 	      
-	      	try
+	      	try 
 	     	{
 	     		HttpClient httpclient = new DefaultHttpClient();
-	 	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/artikal.php?id="+grupa_id);
+	 	        HttpPost httppost = new HttpPost("http://"+menu.ip+"/papagaj/artikal.php?id="+grupa_id);
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();
 	 	        is = entity.getContent();
@@ -151,7 +151,7 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 			try
 	     	{
 	     		HttpClient httpclient = new DefaultHttpClient();
-	 	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/nazivgrupe.php?id="+idGrupe);
+	 	        HttpPost httppost = new HttpPost("http://"+menu.ip+"/papagaj/nazivgrupe.php?id="+idGrupe);
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();
 	 	        is = entity.getContent();

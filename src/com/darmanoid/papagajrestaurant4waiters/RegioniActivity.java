@@ -55,7 +55,7 @@ public class RegioniActivity extends Activity{
         try
     	{
     		HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost("http://192.168.1.74/papagaj/region.php");
+	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/region.php");
 	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	        HttpResponse response = httpclient.execute(httppost); 
 	        HttpEntity entity = response.getEntity();

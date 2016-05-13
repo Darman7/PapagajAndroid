@@ -2,8 +2,12 @@ package com.darmanoid.papagajrestaurant4waiters;
 
 public class Info {
 	/*
-	 * Staticka klasa za prosledjivanje podataka kad mijenjam activity-e
+	 * Staticka klasa za podesavanje IP-a i prosledjivanje podataka prilikom smjenjivanja activity-a
+	 * 
 	 */
+	
+	//Ovdje ubaciti prvatni IP servera
+	public static final String ip="192.168.100.14";
 	public static String konobarID;
 	public static String stoNaziv;
 	public static String grupaIDstr;

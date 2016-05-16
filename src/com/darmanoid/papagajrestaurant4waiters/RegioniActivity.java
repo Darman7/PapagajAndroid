@@ -103,12 +103,15 @@ public class RegioniActivity extends Activity{
 				//UBACIVANJE NOVIH TABOVA! :) 
 				ActionBar.Tab noviTab;
 	        	noviTab=actionBar.newTab().setText(naziv);
-	        	
 	        	Fragment noviFragment = new FragmentTab(reg_id); 
 	        	noviTab.setTabListener(new TabListener(noviFragment));
-	        	actionBar.addTab(noviTab);
+	        	actionBar.addTab(noviTab);   	
+	        		
 			}
-			
+			if(info.regionIDkonabara!=null)
+			{
+				actionBar.setSelectedNavigationItem(Integer.parseInt(info.regionIDkonabara));
+			}
 			//parsirani.setText(output);
 			
 		} catch (Exception e) {

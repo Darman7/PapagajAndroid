@@ -31,7 +31,7 @@ public class LoginActivity extends Activity {
 	InputStream is=null;
 	String result=null;
 	String line=null;
-	
+
 	private EditText username;
 	private Button login;
 	ActionBar.Tab bastaTab,unutrasnjostTab;  
@@ -131,6 +131,7 @@ public class LoginActivity extends Activity {
 					postoji=true;
 					info.konobarID=ime;
 					//Log.i("ime:",ime);
+					info.regionIDkonabara=child.getString("region_id");
 					break;
 				}
 				postoji=false; //ako ponovo pokusavamo :) 

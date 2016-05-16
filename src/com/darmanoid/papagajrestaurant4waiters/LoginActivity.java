@@ -8,7 +8,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
@@ -104,10 +103,7 @@ public class LoginActivity extends Activity {
 	        
 	        HttpEntity entity = response.getEntity();
 	        is = entity.getContent();
-	        Log.e("pass 1", "connection success ");
-	        
-	        
-	       
+	        Log.e("pass 1", "connection success ");    
     	}
         catch(Exception e)
         {
@@ -133,8 +129,7 @@ public class LoginActivity extends Activity {
 	    catch(Exception e)
 	    {
 	    		Log.e("Fail 2", e.toString());
-		}     
-   
+		}      
 		JSONObject jsonResponse;
 	
 		try {
@@ -148,13 +143,14 @@ public class LoginActivity extends Activity {
 				info.konobarKartica=child.getString("kartica");
 				info.konobarIme=child.getString("ime");
 				info.regionIDkonabara=child.getString("region_id");
+				
+
 				postoji=true;
 			}
 			else 
 			{
 				postoji=false;
 			}
-			
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

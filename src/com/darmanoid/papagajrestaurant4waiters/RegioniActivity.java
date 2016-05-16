@@ -115,15 +115,20 @@ public class RegioniActivity extends Activity{
 	        	actionBar.addTab(noviTab);   	
 	        		
 			}
-			if(info.regionIDkonabara!=null)
+			
+			if(!(info.regionIDkonabara.equals("")))
 			{
-				actionBar.setSelectedNavigationItem(Integer.parseInt(info.regionIDkonabara));
+				int d=jsonArray.length();
+				int q=Integer.parseInt(info.regionIDkonabara);
+				int tag=d+1-q;
+				actionBar.setSelectedNavigationItem(tag);
+				Log.i("broj regiona:",info.regionIDkonabara);
 			}
 			//parsirani.setText(output);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
-			Log.i("parser:","ne radi");
+			Log.i("parser regioni:","ne radi");
 		}
 		
 	}

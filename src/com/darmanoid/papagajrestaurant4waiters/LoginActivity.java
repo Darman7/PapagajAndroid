@@ -19,6 +19,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,19 +34,19 @@ public class LoginActivity extends Activity {
 	private EditText username;
 	private Button login;
 	ActionBar.Tab bastaTab,unutrasnjostTab;
-	
-	Info konobar;
+	 
+	Info info;
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.activity_login);
         
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         
         setupVariables(); //ID textfield-a i login buttona
-        
     }
 
     public void authenticateLogin(View view) {
@@ -80,7 +81,7 @@ public class LoginActivity extends Activity {
     	try
     	{
     		HttpClient httpclient = new DefaultHttpClient();
-	        HttpPost httppost = new HttpPost("http://"+konobar.ip+"/papagaj/korisnik.php");
+	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/korisnik.php");
 	        HttpResponse response = httpclient.execute(httppost); 
 	        HttpEntity entity = response.getEntity();
 	        is = entity.getContent();
@@ -126,7 +127,7 @@ public class LoginActivity extends Activity {
 				String ime=child.getString("ime");
 				if(username.getText().toString().equals(kartica)) {
 					postoji=true;
-					konobar.konobarID=ime;
+					info.konobarID=ime;
 					//Log.i("ime:",ime);
 					break;
 				}

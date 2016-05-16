@@ -1,9 +1,9 @@
 TO-DO lista:
-- Maci traku gornju gdje pise Papagaj Restaurant 4 Waiters
-- Srediti izgled pocetnog ekrana (samo da stoji text polje i ispod dugme "Prijava"). Slika u pozadini
-- Logovanje - enter na polje kartica - isto kao button click
+- Maci traku gornju gdje pise Papagaj Restaurant 4 Waiters +
+- Srediti izgled pocetnog ekrana (samo da stoji text polje i ispod dugme "Prijava"). Slika u pozadini +
+- Logovanje - enter na polje kartica - isto kao button click 
 - Logovanje - drugaciji WS, samo sa upitom za karticu - pomoc Duja
 - Dodati su regioni u JSON koji vraca "korisnik.php". Prilikom logovanja, korisnika pozicionirati na selektovani region
-- Maci prefiks "Sto" prilikom crtanja stolova
+- Maci prefiks "Sto" prilikom crtanja stolova +
 - Zauzeti stolovi drugom bojom (crvenom drugog konobara, zelenom ulogovanog konobara) - uz Dujovu pomoc
 - Ucitavanje grupa artikala - razmisliti o crtanju ikonice

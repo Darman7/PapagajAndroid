@@ -23,6 +23,7 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -40,7 +41,7 @@ public class MenuGrupeActivity extends Activity{
 	TextView konobarIme;
 	Button ponisti;
 	Button vratiSe;
-	Info menu;
+	Info info;
 	InputStream is=null;
 	String result=null;
 	String line=null;
@@ -49,6 +50,7 @@ public class MenuGrupeActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		
      super.onCreate(savedInstanceState);
+     requestWindowFeature(Window.FEATURE_NO_TITLE);
      setContentView(R.layout.menu);
      
      stoIme = (TextView) findViewById(R.id.textViewStoID);
@@ -71,7 +73,7 @@ public class MenuGrupeActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				if(menu.grupaID!=-1)
+				if(info.grupaID!=-1)
 				{
 					Intent nextScreen = new Intent(getApplicationContext(), MenuStavkeIzGrupeActivity.class);
 	                startActivity(nextScreen);
@@ -142,7 +144,7 @@ public class MenuGrupeActivity extends Activity{
 	         try
 	     	{
 	     		HttpClient httpclient = new DefaultHttpClient();
-	 	        HttpPost httppost = new HttpPost("http://"+menu.ip+"/papagaj/grupa.php");
+	 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/grupa.php");
 	 	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();

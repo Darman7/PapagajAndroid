@@ -18,6 +18,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -38,7 +39,7 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	TextView stoIme;
 	TextView konobarIme;
 	Button ponisti;
-	Info menu;
+	Info info;
 	InputStream is=null;
 	String result=null;
 	String line=null;
@@ -46,6 +47,7 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	protected void onCreate(Bundle savedInstanceState) {
 		
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.menu);
         
         stoIme = (TextView) findViewById(R.id.textViewStoID);
@@ -63,8 +65,8 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 			    startActivity(nextScreen);
    			}
         });
-        imeGrupe(menu.grupaIDstr);
-        ArrayList array_list = getAllJela(menu.grupaIDstr);
+        imeGrupe(info.grupaIDstr);
+        ArrayList array_list = getAllJela(info.grupaIDstr);
      	ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1, array_list);
    	      
    	 	obj = (ListView)findViewById(R.id.listView1);
@@ -89,7 +91,7 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	      	try 
 	     	{
 	     		HttpClient httpclient = new DefaultHttpClient();
-	 	        HttpPost httppost = new HttpPost("http://"+menu.ip+"/papagaj/artikal.php?id="+grupa_id);
+	 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/artikal.php?id="+grupa_id);
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();
 	 	        is = entity.getContent();
@@ -151,7 +153,7 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 			try
 	     	{
 	     		HttpClient httpclient = new DefaultHttpClient();
-	 	        HttpPost httppost = new HttpPost("http://"+menu.ip+"/papagaj/nazivgrupe.php?id="+idGrupe);
+	 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/nazivgrupe.php?id="+idGrupe);
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();
 	 	        is = entity.getContent();

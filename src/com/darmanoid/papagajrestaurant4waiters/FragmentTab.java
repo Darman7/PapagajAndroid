@@ -152,7 +152,7 @@ public class FragmentTab extends Fragment {
 					/*
 					 * Dodajem svojstva dugmadima
 					 */
-					button.setText("sto: "+naziv);
+					button.setText(naziv); 
 					button.setId(id);
 					id++;
 					button.setLayoutParams(new TableRow.LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f)); 
@@ -196,7 +196,7 @@ public class FragmentTab extends Fragment {
 	        	Intent nextScreen = new Intent(getActivity(), LoginActivity.class);
 			    startActivity(nextScreen);
 	            dialog.dismiss();
-	        }
+	        } 
 	    });
 
 	    builder.setNegativeButton("Ne", new DialogInterface.OnClickListener() {

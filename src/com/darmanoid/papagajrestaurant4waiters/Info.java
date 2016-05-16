@@ -9,6 +9,7 @@ public class Info {
 	//Ovdje ubaciti prvatni IP servera
 	public static final String ip="192.168.1.70";
 	public static String konobarID;
+	public static String regionIDkonabara;
 	public static String stoNaziv;
 	public static String grupaIDstr;
 	

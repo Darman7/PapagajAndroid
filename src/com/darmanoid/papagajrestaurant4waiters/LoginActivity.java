@@ -17,6 +17,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -63,7 +64,7 @@ public class LoginActivity extends Activity {
 		} else {
 			Toast.makeText(getApplicationContext(), "Nepostojeci korisnik!", Toast.LENGTH_SHORT).show();
 		}
-	}
+	} 
     
     /*
      * Cita iz textfida i pronalazi ID dugmete za login
@@ -71,6 +72,7 @@ public class LoginActivity extends Activity {
     private void setupVariables() {
 
         username = (EditText) findViewById(R.id.usernameET);
+        username.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 		login = (Button) findViewById(R.id.loginBtn);
     }
     

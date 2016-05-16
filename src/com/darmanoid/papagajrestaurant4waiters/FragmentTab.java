@@ -64,7 +64,7 @@ public class FragmentTab extends Fragment {
 		TableLayout table=(TableLayout) rootView.findViewById(R.id.tableForButtons);
 		
 		konobarIme = (TextView) rootView.findViewById(R.id.textViewKONOBAR);
-		konobarIme.setText("Konobar: "+Info.konobarID);
+		konobarIme.setText("Konobar: "+Info.konobarIme);
 
 		brza = (Button) rootView.findViewById(R.id.buttonBrzaPorudzba);
         brza.setOnClickListener(new OnClickListener () {

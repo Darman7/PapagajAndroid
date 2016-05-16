@@ -59,7 +59,7 @@ public class MenuGrupeActivity extends Activity{
      stoIme.setText(Info.stoNaziv);// Za prosledjivanje imena stola
      
      konobarIme = (TextView) findViewById(R.id.textViewKonobarID);
-     konobarIme.setText(Info.konobarID);//
+     konobarIme.setText(Info.konobarIme);//
      
      ponisti = (Button) findViewById(R.id.nazad);
      ponisti.setOnClickListener(new OnClickListener () {

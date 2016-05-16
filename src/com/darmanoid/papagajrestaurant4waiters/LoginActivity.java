@@ -92,7 +92,7 @@ public class LoginActivity extends Activity {
     		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
     		HttpConnectionParams.setSoTimeout(params, info.timeout);
     		//
-	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/korisnik.php");
+	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/login.php?card="+username.getText().toString());
 	        HttpResponse response = httpclient.execute(httppost);
 	        
 	        HttpEntity entity = response.getEntity();
@@ -135,22 +135,19 @@ public class LoginActivity extends Activity {
 
 			JSONArray jsonArray = jsonResponse.optJSONArray("korisnik");
 			
-			for (int i = 0; i < jsonArray.length(); i++) {
-				JSONObject child = jsonArray.getJSONObject(i);
-				
-				String kartica = child.getString("kartica");
-				String ime=child.getString("ime");
-				if(username.getText().toString().equals(kartica)) {
-					postoji=true;
-					info.konobarID=ime;
-					//Log.i("ime:",ime);
-					info.regionIDkonabara=child.getString("region_id");
-					break;
-				}
-				postoji=false; //ako ponovo pokusavamo :) 
+			if(jsonArray.length()>=1)
+			{
+				JSONObject child = jsonArray.getJSONObject(0);
+				info.konobarKartica=child.getString("kartica");
+				info.konobarIme=child.getString("ime");
+				info.regionIDkonabara=child.getString("region_id");
+				postoji=true;
+			}
+			else
+			{
+				postoji=false;
 			}
 			
-			//parsirani.setText(output);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

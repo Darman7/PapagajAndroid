@@ -2,25 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/slika"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     >
-
-    <EditText
-        android:id="@+id/usernameET"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/imageView1"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="48dp"
-        android:ems="7"
-        android:hint="Lozinka"
-        android:textSize="30sp" >
-
-        <requestFocus />
-    </EditText>
 
     <Button
         android:id="@+id/loginBtn"
@@ -28,18 +15,20 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/usernameET"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="39dp"
+        android:layout_marginTop="24dp"
         android:onClick="authenticateLogin"
         android:text="Prijava"
         android:textSize="30sp" />
 
-    <ImageView
-        android:id="@+id/imageView1"
+    <EditText
+        android:id="@+id/usernameET"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="56dp"
-        android:src="@drawable/ss" />
+        android:layout_marginTop="187dp"
+        android:ems="7"
+        android:hint="korisnik"
+        android:textSize="30sp" />
 
 </RelativeLayout>

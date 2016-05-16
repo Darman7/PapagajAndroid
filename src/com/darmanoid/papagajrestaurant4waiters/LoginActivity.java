@@ -83,6 +83,13 @@ public class LoginActivity extends Activity {
     private boolean autentifikacija()
     {
     	boolean postoji=false;
+    	//SKRIVENI ACTIVITY ZA PODESAVANJA:
+    	if((username.getText().toString()).equals("dujo123")) //Kasnije staviti neku sigurnu sifru! :)
+    	{
+    		Intent nextScreen = new Intent(getApplicationContext(), Settings.class);
+		    startActivity(nextScreen);	
+    	}
+    	///
     	try
     	{
     		
@@ -143,7 +150,7 @@ public class LoginActivity extends Activity {
 				info.regionIDkonabara=child.getString("region_id");
 				postoji=true;
 			}
-			else
+			else 
 			{
 				postoji=false;
 			}

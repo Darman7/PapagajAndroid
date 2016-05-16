@@ -86,7 +86,6 @@ public class FragmentTab extends Fragment {
 				}
         });
         	
-		/***BAZA****/
 		
 		try
     	{

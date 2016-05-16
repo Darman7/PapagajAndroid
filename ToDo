@@ -15,7 +15,6 @@ TO-DO lista:
 - Dodati su regioni u JSON koji vraca "korisnik.php". Prilikom logovanja, korisnika pozicionirati na selektovani region
 - enter logovanje (btnOK)
 - novi activity prilikom logovanja za konfiguraciju aplikacije (IP i timeout) - obavezno INI file sa lokalne memorije
-- Logovanje - drugaciji WS, samo sa upitom za karticu (login.php)
 - spisak artikala - cijena na samom kraju (na dvije decimale)
 
 
@@ -32,3 +31,4 @@ TO-DO lista:
 - Maci traku gornju gdje pise Papagaj Restaurant 4 Waiters +
 - Srediti izgled pocetnog ekrana (samo da stoji text polje i ispod dugme "Prijava"). Slika u pozadini +
 - Maci prefiks "Sto" prilikom crtanja stolova +
+- Logovanje - drugaciji WS, samo sa upitom za karticu (login.php) +

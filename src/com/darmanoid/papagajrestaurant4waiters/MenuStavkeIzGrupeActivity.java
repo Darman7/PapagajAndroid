@@ -10,6 +10,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -90,7 +92,13 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	      
 	      	try 
 	     	{
+	      		
 	     		HttpClient httpclient = new DefaultHttpClient();
+	     		//Timeout je u milisekundama
+	    		HttpParams params = httpclient.getParams();
+	    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+	    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+	    		//
 	 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/artikal.php?id="+grupa_id);
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();
@@ -153,6 +161,11 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 			try
 	     	{
 	     		HttpClient httpclient = new DefaultHttpClient();
+	     		//Timeout je u milisekundama
+	    		HttpParams params = httpclient.getParams();
+	    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+	    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+	    		//
 	 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/nazivgrupe.php?id="+idGrupe);
 	 	        HttpResponse response = httpclient.execute(httppost); 
 	 	        HttpEntity entity = response.getEntity();

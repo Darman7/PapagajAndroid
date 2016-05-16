@@ -11,6 +11,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -55,6 +57,11 @@ public class RegioniActivity extends Activity{
         try
     	{
     		HttpClient httpclient = new DefaultHttpClient();
+    		//Timeout je u milisekundama
+    		HttpParams params = httpclient.getParams();
+    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+    		//
 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/region.php");
 	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 	        HttpResponse response = httpclient.execute(httppost); 

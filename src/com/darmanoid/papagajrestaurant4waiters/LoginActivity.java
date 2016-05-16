@@ -8,6 +8,9 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -82,12 +85,22 @@ public class LoginActivity extends Activity {
     	boolean postoji=false;
     	try
     	{
+    		
     		HttpClient httpclient = new DefaultHttpClient();
+    		//Timeout je u milisekundama
+    		HttpParams params = httpclient.getParams();
+    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+    		//
 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/korisnik.php");
-	        HttpResponse response = httpclient.execute(httppost); 
+	        HttpResponse response = httpclient.execute(httppost);
+	        
 	        HttpEntity entity = response.getEntity();
 	        is = entity.getContent();
 	        Log.e("pass 1", "connection success ");
+	        
+	        
+	       
     	}
         catch(Exception e)
         {

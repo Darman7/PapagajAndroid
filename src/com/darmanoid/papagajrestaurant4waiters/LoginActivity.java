@@ -33,7 +33,7 @@ public class LoginActivity extends Activity {
 	
 	private EditText username;
 	private Button login;
-	ActionBar.Tab bastaTab,unutrasnjostTab;
+	ActionBar.Tab bastaTab,unutrasnjostTab;  
 	 
 	Info info;
 	

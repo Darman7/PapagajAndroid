@@ -14,14 +14,6 @@
         android:layout_centerHorizontal="true"
         android:textSize="30dp" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageView"
-        android:layout_below="@+id/textViewNaziv"
-        android:layout_centerHorizontal="true"
-        android:src="@drawable/logo"/>
-
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="wrap_content"
@@ -39,8 +31,9 @@
         android:layout_width="match_parent"
         android:layout_height="690dp"
         android:layout_alignLeft="@+id/scrollView"
-  
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true"
+        android:layout_alignRight="@+id/scrollView"
+        android:layout_below="@+id/imageView" >
 
     </ListView>
 
@@ -58,39 +51,54 @@
         android:id="@+id/textViewNaziv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/textView"
+        android:layout_below="@+id/nazad"
         android:layout_centerHorizontal="true"
         android:text="Grupe"
         android:textSize="35dp" />
-
-    <TextView
-        android:id="@+id/textViewKonobarID"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_alignLeft="@+id/buttonPonisti"
-        android:text="Large Text"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
         android:id="@+id/buttonforward"
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/textViewNaziv"
-        android:layout_alignBottom="@+id/textViewNaziv"
         android:layout_alignRight="@+id/scrollView"
+        android:layout_alignTop="@+id/button1"
         android:text=">"
         android:textSize="26sp" />
+
+    <TextView
+        android:id="@+id/textViewKonobarID"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/scrollView"
+        android:layout_alignTop="@+id/imageView"
+        android:text="Large Text"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewNaziv"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/logo" />
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:text="Porudzbina" />
 
     <TextView
         android:id="@+id/textViewStoID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/imageView"
-        android:layout_toRightOf="@+id/imageView"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_marginLeft="46dp"
+        android:layout_toRightOf="@+id/button1"
         android:text="Sto:"
-        android:layout_marginLeft="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

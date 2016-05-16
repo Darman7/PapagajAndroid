@@ -1,9 +1,34 @@
 TO-DO lista:
+
+
+
+###Dujo
+- Zauzeti stolovi drugom bojom (crvenom drugog konobara, zelenom ulogovanog konobara)
+- WS za priloge artikal ?id=x
+
+
+
+
+###Nikola:
+- logo iznad text fielda i malo srediti
+- pozadina na svim aktivitijima
+- Dodati su regioni u JSON koji vraca "korisnik.php". Prilikom logovanja, korisnika pozicionirati na selektovani region
+- enter logovanje (btnOK)
+- novi activity prilikom logovanja za konfiguraciju aplikacije (IP i timeout) - obavezno INI file sa lokalne memorije
+- Logovanje - drugaciji WS, samo sa upitom za karticu (login.php)
+- spisak artikala - cijena na samom kraju (na dvije decimale)
+
+
+
+
+###Za kasnije:
+- Ucitavanje grupa artikala - razmisliti o crtanju ikonice
+- Spisak artikala - crtanje ikonice
+
+
+
+
+###Zavrseno:
 - Maci traku gornju gdje pise Papagaj Restaurant 4 Waiters +
 - Srediti izgled pocetnog ekrana (samo da stoji text polje i ispod dugme "Prijava"). Slika u pozadini +
-- Logovanje - enter na polje kartica - isto kao button click 
-- Logovanje - drugaciji WS, samo sa upitom za karticu - pomoc Duja
-- Dodati su regioni u JSON koji vraca "korisnik.php". Prilikom logovanja, korisnika pozicionirati na selektovani region
 - Maci prefiks "Sto" prilikom crtanja stolova +
-- Zauzeti stolovi drugom bojom (crvenom drugog konobara, zelenom ulogovanog konobara) - uz Dujovu pomoc
-- Ucitavanje grupa artikala - razmisliti o crtanju ikonice

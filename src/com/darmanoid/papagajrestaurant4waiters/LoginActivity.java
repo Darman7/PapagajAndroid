@@ -83,7 +83,7 @@ public class LoginActivity extends Activity {
     {
     	boolean postoji=false;
     	//SKRIVENI ACTIVITY ZA PODESAVANJA:
-    	if((username.getText().toString()).equals("dujo123")) //Kasnije staviti neku sigurnu sifru! :)
+    	if((username.getText().toString()).equals("flavius123")) //Kasnije staviti neku sigurnu sifru! :)
     	{
     		Intent nextScreen = new Intent(getApplicationContext(), Settings.class);
 		    startActivity(nextScreen);	
@@ -127,7 +127,7 @@ public class LoginActivity extends Activity {
             	Log.e("pass 2", "connection success ");
 		}
 	    catch(Exception e)
-	    {
+	    {  
 	    		Log.e("Fail 2", e.toString());
 		}      
 		JSONObject jsonResponse;
@@ -137,7 +137,7 @@ public class LoginActivity extends Activity {
 
 			JSONArray jsonArray = jsonResponse.optJSONArray("korisnik");
 			
-			if(jsonArray.length()>=1)
+			if(jsonArray.length()>=1)        
 			{
 				JSONObject child = jsonArray.getJSONObject(0);
 				info.konobarKartica=child.getString("kartica");

@@ -15,13 +15,10 @@ import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -48,15 +45,17 @@ public class MenuGrupeActivity extends Activity{
 	String result=null;
 	String line=null;
 	String[] id=null;
+	
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		
+		 
      super.onCreate(savedInstanceState);
      requestWindowFeature(Window.FEATURE_NO_TITLE);
      setContentView(R.layout.menu);
      
      stoIme = (TextView) findViewById(R.id.textViewStoID);
-     stoIme.setText(Info.stoNaziv);// Za prosledjivanje imena stola
+     stoIme.setText("sto: "+Info.stoNaziv);// Za prosledjivanje imena stola
      
      konobarIme = (TextView) findViewById(R.id.textViewKonobarID);
      konobarIme.setText(Info.konobarIme);//
@@ -112,7 +111,7 @@ public class MenuGrupeActivity extends Activity{
 
 	    builder.setTitle("Ponisti porudzbu");
 	    builder.setMessage("Da li zelite da ponistite porudzbu?");
-
+ 
 	    builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
 
 	        @Override

@@ -53,7 +53,7 @@ public class MenuStavkeIzGrupeActivity extends Activity{
         setContentView(R.layout.menu);
         
         stoIme = (TextView) findViewById(R.id.textViewStoID);
-        stoIme.setText(Info.stoNaziv);
+        stoIme.setText("sto: "+Info.stoNaziv);
         
         konobarIme = (TextView) findViewById(R.id.textViewKonobarID);
         konobarIme.setText(Info.konobarIme);//

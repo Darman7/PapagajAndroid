@@ -5,7 +5,7 @@
     android:background="@drawable/slika">
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonNazad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -13,12 +13,12 @@
         android:text="&lt;" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/button1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_marginLeft="120dp"
-        android:layout_toRightOf="@+id/button1"
+        android:layout_toRightOf="@+id/buttonNazad"
         android:text="Potvrdi porudzbu" />
 
 </RelativeLayout>

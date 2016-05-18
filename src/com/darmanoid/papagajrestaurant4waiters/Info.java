@@ -9,7 +9,7 @@ public class Info {
 	//Ovdje ubaciti prvatni IP servera
 	public static String ip="192.168.1.70";
 	public static int timeout=3000;
-	
+	   
 	public static String konobarKartica;
 	public static String konobarIme;
 	public static String regionIDkonabara;
@@ -20,7 +20,10 @@ public class Info {
 	
 	public static int stoID;
 	public static int grupaID=-1;
-	public static int jeloID;
+	
+	public static String jeloID;
+	public static String nazivJela;
+	public static String cijena;
 	
 	public Info(){
 		super();

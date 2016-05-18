@@ -76,7 +76,7 @@ public class MenuGrupeActivity extends Activity{
 				// TODO Auto-generated method stub
 				if(info.grupaID!=-1)
 				{
-					Intent nextScreen = new Intent(getApplicationContext(), MenuStavkeIzGrupeActivity.class);
+					Intent nextScreen = new Intent(getApplicationContext(), MenuArtikliActivity.class);
 	                startActivity(nextScreen);
 				}
 				
@@ -99,7 +99,7 @@ public class MenuGrupeActivity extends Activity{
 	            
 	            Info.grupaIDstr=id[arg2];
 	            //Log.i("moj niz:",Info.grupaIDstr);
-	            Intent nextScreen = new Intent(getApplicationContext(), MenuStavkeIzGrupeActivity.class);
+	            Intent nextScreen = new Intent(getApplicationContext(), MenuArtikliActivity.class);
                 startActivity(nextScreen);
 	         }
 	      });

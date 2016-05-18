@@ -118,7 +118,7 @@ public class ArtikliCustomAdapter extends BaseAdapter   implements OnClickListen
          @Override
          public void onClick(View arg0) {
             	 
-        	 MenuStavkeIzGrupeActivity sct = (MenuStavkeIzGrupeActivity)activity;
+        	 MenuArtikliActivity sct = (MenuArtikliActivity)activity;
              sct.onItemClick(mPosition);
          }               
      }   

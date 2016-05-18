@@ -20,7 +20,7 @@
     </EditText>
  
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonNazad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/editText1"
@@ -33,7 +33,7 @@
         android:id="@+id/textViewJSON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/button1"
+        android:layout_below="@+id/buttonNazad"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
         android:text="Large Text"

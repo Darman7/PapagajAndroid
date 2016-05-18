@@ -62,7 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignRight="@+id/scrollView"
-        android:layout_alignTop="@+id/button1"
+        android:layout_alignTop="@+id/buttonNazad"
         android:text=">"
         android:textSize="26sp" />
 
@@ -84,7 +84,7 @@
         android:src="@drawable/logo" />
 
     <Button
-        android:id="@+id/button1"
+        android:id="@+id/buttonNazad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/textView"
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/imageView"
         android:layout_marginLeft="46dp"
-        android:layout_toRightOf="@+id/button1"
+        android:layout_toRightOf="@+id/buttonNazad"
         android:text="Sto:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 

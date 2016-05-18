@@ -26,7 +26,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="15dp"
         android:ems="7"
-        android:hint="korisnik"
+        android:hint="lozinka"
         android:textSize="30sp" >
 
         <requestFocus />

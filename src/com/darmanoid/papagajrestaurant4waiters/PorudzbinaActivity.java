@@ -1,5 +1,7 @@
 package com.darmanoid.papagajrestaurant4waiters;
 
-public class PorudzbinaActivity {
+import android.app.Activity;
+
+public class PorudzbinaActivity extends Activity{
 	
 }

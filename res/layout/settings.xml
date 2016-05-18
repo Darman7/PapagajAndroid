@@ -5,7 +5,7 @@
     android:background="@drawable/slika" >
 
     <TextView
-        android:id="@+id/textView1"
+        android:id="@+id/text1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -19,13 +19,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/buttonTimeout"
-        android:layout_alignRight="@+id/textView1"
+        android:layout_alignRight="@+id/text1"
         android:ems="10" />
     <Button
         android:id="@+id/buttonIP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView1"
+        android:layout_below="@+id/text1"
         android:layout_marginRight="24dp"
         android:layout_marginTop="103dp"
         android:layout_toLeftOf="@+id/editIP"

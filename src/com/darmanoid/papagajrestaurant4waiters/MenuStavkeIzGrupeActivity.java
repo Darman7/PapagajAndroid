@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -45,12 +46,26 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	InputStream is=null;
 	String result=null;
 	String line=null;
+	
+	///NOVO
+	ListView lista;
+    ArtikliCustomAdapter adapter;
+    public  MenuStavkeIzGrupeActivity CustomListView = null;
+    public  ArrayList<ArtikliListModel> CustomListViewValuesArr = new ArrayList<ArtikliListModel>();
+    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.menu);
+
+        CustomListView = this; //dodato
+        setListData(info.grupaIDstr);
+        Resources res =getResources();
+        lista= ( ListView )findViewById( R.id.listView1 );          
+        adapter=new ArtikliCustomAdapter( CustomListView, CustomListViewValuesArr,res );
+        lista.setAdapter( adapter );
         
         stoIme = (TextView) findViewById(R.id.textViewStoID);
         stoIme.setText("sto: "+Info.stoNaziv);
@@ -68,29 +83,12 @@ public class MenuStavkeIzGrupeActivity extends Activity{
    			}
         });
         imeGrupe(info.grupaIDstr);
-        ArrayList array_list = getAllJela(info.grupaIDstr);
-     	ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1, array_list);
-   	      
-   	 	obj = (ListView)findViewById(R.id.listView1);
-   	 	obj.setAdapter(arrayAdapter);
-   	 	obj.setOnItemClickListener(new OnItemClickListener(){
-   	         @Override
-   	         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-   	            // TODO Auto-generated method stub
-   	            int id_To_Search = arg2 + 1;
-   	            
-   	            Bundle dataBundle = new Bundle();
-   	            dataBundle.putInt("id", id_To_Search);
-   	           //Potencijalne grese zbog nesortiranosti po ID-u u bazi
-   	         }
-   	      });
    	      
    	   }
-	 	public ArrayList<String> getAllJela(String  grupa_id)
-	   {
-	 		ArrayList<String> array_list = new ArrayList<String>();
-	      
-	      	try 
+		private void setListData(String  grupa_id) {
+		// TODO Auto-generated method stub
+			
+			try 
 	     	{
 	      		
 	     		HttpClient httpclient = new DefaultHttpClient();
@@ -141,20 +139,20 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	 			for (int i = 0; i < jsonArray.length(); i++) {
 	 				JSONObject child = jsonArray.getJSONObject(i);
 	 				
-	 				//String reg_id = child.getString("grupa_id");
-	 				String naziv=child.getString("naziv");
 	 				
-	 				array_list.add(naziv);
+	 				String naziv=child.getString("naziv");
+	 				String cijena=child.getString("cijena");
+	 				String artikal_id=child.getString("artikal_id");
+	 				ArtikliListModel stavka = new ArtikliListModel(naziv,cijena+" €",artikal_id);
+	 				CustomListViewValuesArr.add( stavka );
 	 			}
 	 			
 	 		} catch (Exception e) {
 	 			// TODO Auto-generated catch block
 	 			Log.i("parser artikli:","ne radi");
 	 		}
-	      //hp = new HashMap();
-			return array_list;
-	   }
-	 	
+		}
+		
 	 	 private void imeGrupe(String idGrupe)
 	     {
 			
@@ -219,4 +217,11 @@ public class MenuStavkeIzGrupeActivity extends Activity{
 	 			Log.i("parser za stavke","ne radi");
 	 		}
 	     }
+	 	
+		public void onItemClick(int mPosition) {
+			ArtikliListModel tempValues = ( ArtikliListModel ) CustomListViewValuesArr.get(mPosition);
+			
+            Toast.makeText(CustomListView,""+tempValues.getNaziv()+" "+tempValues.getId(),Toast.LENGTH_LONG).show();
+			//kasnije da prebaci na drugi ACtivity
+		}
 }

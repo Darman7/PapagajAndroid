@@ -85,7 +85,7 @@ public class LoginActivity extends Activity {
     	//SKRIVENI ACTIVITY ZA PODESAVANJA:
     	if((username.getText().toString()).equals("flavius123")) //Kasnije staviti neku sigurnu sifru! :)
     	{
-    		Intent nextScreen = new Intent(getApplicationContext(), Settings.class);
+    		Intent nextScreen = new Intent(getApplicationContext(), SettingsActivity.class);
 		    startActivity(nextScreen);	
     	}
     	///

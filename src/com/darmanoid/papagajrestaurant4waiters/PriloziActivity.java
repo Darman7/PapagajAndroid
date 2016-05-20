@@ -60,8 +60,8 @@ public class PriloziActivity extends Activity{
 	InputStream is=null;
 	String result=null;
 	String line=null;
-	LinearLayout layoutRadio;
-	LinearLayout layoutChk;
+	LinearLayout layoutRadioChk;
+	int idDefault;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -69,8 +69,7 @@ public class PriloziActivity extends Activity{
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy); 
         
-        layoutRadio=(LinearLayout) findViewById(R.id.zaRadio);
-        layoutChk=(LinearLayout) findViewById(R.id.zaChk);
+        layoutRadioChk=(LinearLayout) findViewById(R.id.zaRadio);
         
         setupVariables();
         radioDugmad();
@@ -133,7 +132,7 @@ public class PriloziActivity extends Activity{
 				nazivTV.setText(dg_naziv);
 				nazivTV.setTextSize(20f);
 				nazivTV.setTypeface(null, Typeface.BOLD);
-				layoutRadio.addView(nazivTV);
+				layoutRadioChk.addView(nazivTV);
 				String dg_tip=opis.getString("dg_tip"); //0 je radio Button
 				//Log.i("dg_naziv:",dg_naziv);
 				
@@ -147,14 +146,17 @@ public class PriloziActivity extends Activity{
 						//dohvatam iz najdubljih nizova objekte
 						JSONObject child=opcijeArray.getJSONObject(j);
 						String dodatak_naziv=child.getString("dodatak_naziv");
-						//Log.i("zahtjevi:", dodatak_naziv);
-						
+						String defaultradio=child.getString("defaultradio");
+
 						RadioButton btn=new RadioButton(this);
 						btn.setText(dodatak_naziv);
 						btn.setTextSize(20f);
+						btn.setId(j);
+						if(defaultradio.equals("1")) idDefault=btn.getId() ;
 						group.addView(btn);
 					}
-					layoutRadio.addView(group);
+					group.check(idDefault);
+					layoutRadioChk.addView(group);
 					
 				}
 				else if(dg_tip.equals("1")) //Crtam chk boxeve
@@ -165,17 +167,18 @@ public class PriloziActivity extends Activity{
 						//dohvatam iz najdubljih nizova objekte
 						JSONObject child=opcijeArray.getJSONObject(j);
 						String dodatak_naziv=child.getString("dodatak_naziv");
-						//Log.i("zahtjevi:", dodatak_naziv);
+						String defaultradio=child.getString("defaultradio");
 						
 						CheckBox chk=new CheckBox(this);
 						chk.setText(dodatak_naziv);
 						chk.setTextSize(20f);
-						layoutRadio.addView(chk); //Ako ga ovdje dodam?
+						if(defaultradio.equals("1")) chk.setChecked(true);
+						layoutRadioChk.addView(chk); 
 					}
 				}
 				TextView razmak=new TextView(this);
 				razmak.setText(" ");
-				layoutRadio.addView(razmak);
+				layoutRadioChk.addView(razmak);
 				
 					
 			}	

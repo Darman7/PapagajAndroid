@@ -115,30 +115,6 @@
         android:minWidth="80dp"
         android:text="pola" />
 
-    <TableLayout
-        android:id="@+id/tableDetalji"
-        android:layout_width="530dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/button7"
-        android:layout_centerVertical="true" >
-
-        <TableRow
-            android:id="@+id/tableRow1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" >
-        </TableRow>
-    </TableLayout>
-
-    <TableLayout
-        android:id="@+id/tablePrilozi"
-        android:layout_width="530dp"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/tableDetalji"
-        android:layout_below="@+id/tableDetalji"
-        android:layout_marginTop="56dp" >
-
-    </TableLayout>
-
     <Button
         android:id="@+id/button1"
         android:layout_width="wrap_content"
@@ -209,5 +185,28 @@
         android:layout_marginTop="16dp"
         android:text="&lt;"
         android:textSize="26sp" />
+
+    <LinearLayout
+        android:id="@+id/zaRadio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/button7"
+        android:layout_alignRight="@+id/buttonDodajStavku"
+        android:layout_below="@+id/button7"
+        android:layout_marginTop="35dp"
+        android:orientation="vertical" >
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/zaChk"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/zaRadio"
+        android:layout_below="@+id/zaRadio"
+        android:layout_marginTop="38dp"
+        android:orientation="vertical" >
+
+    </LinearLayout>
 
 </RelativeLayout>

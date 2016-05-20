@@ -1,17 +1,41 @@
 package com.darmanoid.papagajrestaurant4waiters;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.text.DecimalFormat;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.PorterDuff;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.text.Layout;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class PriloziActivity extends Activity{
 	TextView nazivArtikla;
@@ -32,16 +56,134 @@ public class PriloziActivity extends Activity{
 	String pom;
 	float s;
 	Info info;
+	
+	InputStream is=null;
+	String result=null;
+	String line=null;
+	LinearLayout layoutRadio;
+	LinearLayout layoutChk;
 	protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         setContentView(R.layout.prilozi);
-        
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy); 
-   
-        setupVariables();   
+        
+        layoutRadio=(LinearLayout) findViewById(R.id.zaRadio);
+        layoutChk=(LinearLayout) findViewById(R.id.zaChk);
+        
+        setupVariables();
+        radioDugmad();
     }
+	private void radioDugmad()
+	{
+		try
+    	{
+    		HttpClient httpclient = new DefaultHttpClient();
+    		//Timeout je u milisekundama
+    		HttpParams params = httpclient.getParams();
+    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+    		//
+	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/artikaldodaci.php?id="+info.jeloID);
+	        HttpResponse response = httpclient.execute(httppost); 
+	        HttpEntity entity = response.getEntity();
+	        is = entity.getContent();
+	        Log.e("pass 1", "connection success ");
+    	}
+        catch(Exception e)
+        {
+        	Log.e("Fail 1", e.toString());
+	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
+			Toast.LENGTH_LONG).show();
+        }     
+        
+        try
+        {
+         		BufferedReader reader = new BufferedReader
+				(new InputStreamReader(is,"iso-8859-1"),8);
+            	StringBuilder sb = new StringBuilder();
+            	while ((line = reader.readLine()) != null)
+            {
+       		    sb.append(line + "\n");
+        	}
+            	is.close();
+            	result = sb.toString();
+            	//Log.i("izgled:",result);
+            	Log.e("pass 2", "connection success ");
+		}
+	        catch(Exception e)
+	    	{
+			Log.e("Fail 2", e.toString());
+		}     
+		JSONObject jsonResponse;
+	
+		try {
+			jsonResponse = new JSONObject(result);
+			JSONArray jsonArray = jsonResponse.optJSONArray("zahtjevi");
+			
+			for(int i=0; i<jsonArray.length(); i++)
+			{
+				TableRow tableRow=new TableRow(getApplicationContext());
+				//table.addView(tableRow); 
+				
+				JSONObject opis=jsonArray.getJSONObject(i); 
+				String dg_naziv=opis.getString("dg_naziv");
+				TextView nazivTV=new TextView(this);
+				nazivTV.setText(dg_naziv);
+				nazivTV.setTextSize(20f);
+				nazivTV.setTypeface(null, Typeface.BOLD);
+				layoutRadio.addView(nazivTV);
+				String dg_tip=opis.getString("dg_tip"); //0 je radio Button
+				//Log.i("dg_naziv:",dg_naziv);
+				
+				JSONArray opcijeArray=opis.optJSONArray("opcije");
+				if(dg_tip.equals("0")) //crtam radio dugmad
+				{
+					RadioGroup group = new RadioGroup(this); 
+					group.setOrientation(RadioGroup.HORIZONTAL);
+					for(int j=0; j<opcijeArray.length();j++)
+					{
+						//dohvatam iz najdubljih nizova objekte
+						JSONObject child=opcijeArray.getJSONObject(j);
+						String dodatak_naziv=child.getString("dodatak_naziv");
+						//Log.i("zahtjevi:", dodatak_naziv);
+						
+						RadioButton btn=new RadioButton(this);
+						btn.setText(dodatak_naziv);
+						btn.setTextSize(20f);
+						group.addView(btn);
+					}
+					layoutRadio.addView(group);
+					
+				}
+				else if(dg_tip.equals("1")) //Crtam chk boxeve
+				{
+					
+					for(int j=0; j<opcijeArray.length();j++)
+					{
+						//dohvatam iz najdubljih nizova objekte
+						JSONObject child=opcijeArray.getJSONObject(j);
+						String dodatak_naziv=child.getString("dodatak_naziv");
+						//Log.i("zahtjevi:", dodatak_naziv);
+						
+						CheckBox chk=new CheckBox(this);
+						chk.setText(dodatak_naziv);
+						chk.setTextSize(20f);
+						layoutRadio.addView(chk); //Ako ga ovdje dodam?
+					}
+				}
+				TextView razmak=new TextView(this);
+				razmak.setText(" ");
+				layoutRadio.addView(razmak);
+				
+					
+			}	
+		}	
+		catch (Exception e) {
+			Log.i("parser za priloge:","ne radi");
+		}
+	}	
 	
 	private void racunaj(int kol)
 	{

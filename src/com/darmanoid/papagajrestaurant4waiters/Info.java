@@ -7,8 +7,8 @@ public class Info {
 	 */
 	
 	//Ovdje ubaciti prvatni IP servera
-	public static String ip="192.168.1.70";
-	public static int timeout=3000;
+	public static String ip="192.168.1.65";
+	public static int timeout=5000; 
 	   
 	public static String konobarKartica;
 	public static String konobarIme;

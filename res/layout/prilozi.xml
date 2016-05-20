@@ -147,25 +147,6 @@
         android:text="Naziv artikla"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    <TextView
-        android:id="@+id/textCijena"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView3"
-        android:layout_toRightOf="@+id/textView1"
-        android:text="cijena"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
-    <TextView
-        android:id="@+id/textView1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textView3"
-        android:layout_alignLeft="@+id/button11"
-        android:layout_marginLeft="39dp"
-        android:text="Cijena:"
-        android:textAppearance="?android:attr/textAppearanceLarge" />
-
     <Button
         android:id="@+id/buttonDodajStavku"
         android:layout_width="wrap_content"
@@ -208,5 +189,37 @@
         android:orientation="vertical" >
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignLeft="@+id/button11"
+        android:layout_marginLeft="39dp"
+        android:text="Cijena:"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
+        android:id="@+id/textCijena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="cijena"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <Button
+        android:id="@+id/buttonPorudzba"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonNazad"
+        android:layout_alignBottom="@+id/buttonNazad"
+        android:layout_alignLeft="@+id/textKolicina"
+        android:layout_toLeftOf="@+id/textView1"
+        android:text="PORUDZBA"
+        android:textStyle="bold"
+        android:typeface="sans" />
 
 </RelativeLayout>

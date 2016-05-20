@@ -52,6 +52,7 @@ public class PriloziActivity extends Activity{
 	Button btn8;
 	Button btn9;
 	Button nazad;
+	Button porudzba;
 	
 	String pom;
 	float s;
@@ -147,12 +148,12 @@ public class PriloziActivity extends Activity{
 						JSONObject child=opcijeArray.getJSONObject(j);
 						String dodatak_naziv=child.getString("dodatak_naziv");
 						String defaultradio=child.getString("defaultradio");
-
+						String dodatak_id=child.getString("dodatak_id");
 						RadioButton btn=new RadioButton(this);
 						btn.setText(dodatak_naziv);
 						btn.setTextSize(20f);
-						btn.setId(j);
-						if(defaultradio.equals("1")) idDefault=btn.getId() ;
+						btn.setId(Integer.parseInt(dodatak_id));
+						if(defaultradio.equals("1")) idDefault=btn.getId();
 						group.addView(btn);
 					}
 					group.check(idDefault);
@@ -222,6 +223,7 @@ public class PriloziActivity extends Activity{
         btn8 = (Button) findViewById(R.id.button8);
         btn9 = (Button) findViewById(R.id.button9);
         nazad= (Button) findViewById(R.id.buttonNazad);
+        porudzba=(Button)findViewById(R.id.buttonPorudzba);
         
         btn1.setOnClickListener(new OnClickListener () {
 			@Override
@@ -290,6 +292,20 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				Intent nextScreen = new Intent(getApplicationContext(), MenuArtikliActivity.class);
+			    startActivity(nextScreen);
+			}
+        });
+        dodaj.setOnClickListener(new OnClickListener () {
+			@Override
+			public void onClick(View v) {
+				kolicina = (TextView) findViewById(R.id.textKolicina);
+				info.poruceno.add(info.nazivJela+" "+kolicina.getText());
+			}
+        });
+        porudzba.setOnClickListener(new OnClickListener () {
+			@Override
+			public void onClick(View v) {
+				Intent nextScreen = new Intent(getApplicationContext(), PorudzbaActivity.class);
 			    startActivity(nextScreen);
 			}
         });

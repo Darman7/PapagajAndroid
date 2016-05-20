@@ -1,5 +1,7 @@
 package com.darmanoid.papagajrestaurant4waiters;
 
+import java.util.ArrayList;
+
 public class Info {
 	/*
 	 * Staticka klasa za podesavanje IP-a i prosledjivanje podataka prilikom smjenjivanja activity-a
@@ -24,6 +26,17 @@ public class Info {
 	public static String jeloID;
 	public static String nazivJela;
 	public static String cijena;
+	
+	
+	public static ArrayList<String> poruceno=new ArrayList();
+	public void ocisti()
+	{
+		this.jeloID=null;
+		this.nazivJela=null;
+		this.cijena=null;
+		this.stoNaziv=null;
+		
+	}
 	
 	public Info(){
 		super();

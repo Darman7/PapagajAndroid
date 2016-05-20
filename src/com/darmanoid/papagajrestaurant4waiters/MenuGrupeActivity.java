@@ -34,12 +34,13 @@ import android.widget.AdapterView.OnItemClickListener;
 
 public class MenuGrupeActivity extends Activity{
 	
-	public final static String EXTRA_MESSAGE = "MESSAGE";
+	
 	private ListView obj;
 	TextView stoIme;
 	TextView konobarIme;
 	Button ponisti;
 	Button vratiSe;
+	Button porudzba;
 	Info info;
 	InputStream is=null;
 	String result=null;
@@ -82,6 +83,15 @@ public class MenuGrupeActivity extends Activity{
 				
 			}
      });
+     porudzba = (Button) findViewById(R.id.buttonPorudzba);
+     porudzba.setOnClickListener(new OnClickListener () {
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+					Intent nextScreen = new Intent(getApplicationContext(), PorudzbaActivity.class);
+	                startActivity(nextScreen);
+			}
+     });
      
 	 ArrayList array_list = getAllGrupe();
 	 ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1, array_list);
@@ -116,6 +126,7 @@ public class MenuGrupeActivity extends Activity{
 
 	        @Override
 			public void onClick(DialogInterface dialog, int which) {
+	        	info.poruceno.clear();
 	        	Intent nextScreen = new Intent(getApplicationContext(), RegioniActivity.class);
 			    startActivity(nextScreen);
 	            dialog.dismiss();

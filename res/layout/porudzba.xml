@@ -4,21 +4,44 @@
     android:layout_height="match_parent" 
     android:background="@drawable/slika">
 
+    <ScrollView
+        android:id="@+id/scrollView1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/buttonNazad"
+        android:layout_marginTop="115dp" >
+
+        
+    </ScrollView>
+    <Button
+        android:id="@+id/buttonPotvrdi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="28dp"
+        android:text="Zavrsi porudzbu" />
+
+    <ListView
+        android:id="@+id/poruceno"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/scrollView1" >
+
+    </ListView>
+
     <Button
         android:id="@+id/buttonNazad"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentTop="true"
-        android:text="&lt;" />
-
-    <Button
-        android:id="@+id/button1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginLeft="120dp"
-        android:layout_toRightOf="@+id/buttonNazad"
-        android:text="Potvrdi porudzbu" />
+        android:layout_alignTop="@+id/buttonPotvrdi"
+        android:layout_marginLeft="30dp"
+        android:text="&lt;"
+        android:textSize="26sp" />
 
 </RelativeLayout>

@@ -41,7 +41,8 @@ public class MenuArtikliActivity extends Activity{
 	 
 	TextView stoIme;
 	TextView konobarIme;
-	Button ponisti;
+	Button nazad;
+	Button porudzba;
 	Info info;
 	InputStream is=null;
 	String result=null;
@@ -73,8 +74,8 @@ public class MenuArtikliActivity extends Activity{
         konobarIme = (TextView) findViewById(R.id.textViewKonobarID);
         konobarIme.setText(Info.konobarIme);//
         
-        ponisti = (Button) findViewById(R.id.nazad);
-        ponisti.setOnClickListener(new OnClickListener () {
+        nazad = (Button) findViewById(R.id.nazad);
+        nazad.setOnClickListener(new OnClickListener () {
    			@Override
    			public void onClick(View v) {
    				// TODO Auto-generated method stub
@@ -82,6 +83,16 @@ public class MenuArtikliActivity extends Activity{
 			    startActivity(nextScreen);
    			}
         });
+        porudzba = (Button) findViewById(R.id.buttonPorudzba);
+        porudzba.setOnClickListener(new OnClickListener () {
+   			@Override
+   			public void onClick(View v) {
+   				// TODO Auto-generated method stub
+   					Intent nextScreen = new Intent(getApplicationContext(), PorudzbaActivity.class);
+   	                startActivity(nextScreen);
+   			}
+        });
+        
         imeGrupe(info.grupaIDstr);
    	      
    	   }

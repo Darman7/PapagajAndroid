@@ -1,0 +1,24 @@
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableRow1"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp"
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp"
+    android:stretchColumns="*" >
+
+    <ImageView
+        android:id="@+id/imageViewSLIKA"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo" />
+	
+    <TextView
+        android:id="@+id/textNaziv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:minWidth="450dp"
+        android:text="prva"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+</TableRow>

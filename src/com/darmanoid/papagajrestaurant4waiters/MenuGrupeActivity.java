@@ -3,6 +3,7 @@ package com.darmanoid.papagajrestaurant4waiters;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
@@ -19,7 +20,12 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.media.Image;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -27,6 +33,7 @@ import android.view.View.OnClickListener;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,9 +52,12 @@ public class MenuGrupeActivity extends Activity{
 	InputStream is=null;
 	String result=null;
 	String line=null;
-	String[] id=null;
+	String slika=null;
 	
-	
+	ListView lista;
+    GrupeCustomAdapter adapter;
+    public  MenuGrupeActivity CustomListView = null;
+    public  ArrayList<GrupeListModel> CustomListViewValuesArr = new ArrayList<GrupeListModel>();
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		 
@@ -55,11 +65,20 @@ public class MenuGrupeActivity extends Activity{
      requestWindowFeature(Window.FEATURE_NO_TITLE);
      setContentView(R.layout.menu);
      
+     
+     CustomListView = this; //dodato
+     setListData(info.grupaIDstr);
+     Resources res =getResources();
+     lista= ( ListView )findViewById( R.id.listView1 );          
+     adapter=new GrupeCustomAdapter( CustomListView, CustomListViewValuesArr,res );
+     lista.setAdapter( adapter );
+     
      stoIme = (TextView) findViewById(R.id.textViewStoID);
      stoIme.setText("sto: "+Info.stoNaziv);// Za prosledjivanje imena stola
      
      konobarIme = (TextView) findViewById(R.id.textViewKonobarID);
      konobarIme.setText(Info.konobarIme);//
+     
      
      ponisti = (Button) findViewById(R.id.nazad);
      ponisti.setOnClickListener(new OnClickListener () {
@@ -92,29 +111,72 @@ public class MenuGrupeActivity extends Activity{
 	                startActivity(nextScreen);
 			}
      });
-     
-	 ArrayList array_list = getAllGrupe();
-	 ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1, array_list);
-	      
-	 obj = (ListView)findViewById(R.id.listView1);
-	 obj.setAdapter(arrayAdapter);
-	 obj.setOnItemClickListener(new OnItemClickListener(){
-	         @Override
-	         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2,long arg3) {
-	            // TODO Auto-generated method stub
-	            //int id_To_Search = arg2 + 1;
-	            //Bundle dataBundle = new Bundle();
-	            //dataBundle.putInt("id", id_To_Search);
-	            //Info.grupaID=id_To_Search;
-	            
-	            Info.grupaIDstr=id[arg2];
-	            //Log.i("moj niz:",Info.grupaIDstr);
-	            Intent nextScreen = new Intent(getApplicationContext(), MenuArtikliActivity.class);
-                startActivity(nextScreen);
-	         }
-	      });
-	      
+        
 	   }
+	  
+	private void setListData(String grupaIDstr) {
+		try
+     	{
+     		HttpClient httpclient = new DefaultHttpClient();
+     		//Timeout je u milisekundama
+    		HttpParams params = httpclient.getParams();
+    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+    		//
+ 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/grupaslike.php");
+ 	        HttpResponse response = httpclient.execute(httppost); 
+ 	        HttpEntity entity = response.getEntity();
+ 	        is = entity.getContent();
+ 	        Log.e("pass 1", "connection success ");
+     	}
+         catch(Exception e)
+         {
+         	Log.e("Fail 1", e.toString());
+ 	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
+ 			Toast.LENGTH_LONG).show();
+         }     
+         
+         try
+         {
+          	BufferedReader reader = new BufferedReader
+ 				(new InputStreamReader(is,"iso-8859-1"),8);
+             	StringBuilder sb = new StringBuilder();
+             	while ((line = reader.readLine()) != null)
+             	{
+        		    sb.append(line + "\n");
+            	}
+             	is.close();
+             	result = sb.toString();
+             	//Log.i("izgled:",result);
+             	Log.e("pass 2", "connection success ");
+ 		}
+ 	        catch(Exception e)
+ 	    	{
+ 			Log.e("Fail 2", e.toString());
+ 		}     
+        
+ 		JSONObject jsonResponse;
+ 	
+ 		try {
+ 			jsonResponse = new JSONObject(result);
+
+ 			JSONArray jsonArray = jsonResponse.optJSONArray("grupa");
+ 			for (int i = 0; i < jsonArray.length(); i++) {
+ 				JSONObject child = jsonArray.getJSONObject(i);
+ 				
+ 				String reg_id = child.getString("grupa_id");
+ 				String naziv=child.getString("naziv");
+ 				String image=child.getString("slika");
+ 				Bitmap sl=base64ToBitmap(image);
+ 				GrupeListModel stavka = new GrupeListModel(naziv,reg_id,sl);
+ 				CustomListViewValuesArr.add( stavka );
+ 			}
+ 		} catch (Exception e) {
+ 			// TODO Auto-generated catch block
+ 			Log.i("parser menu:","ne radi");
+ 		}
+		
+	}
 	@Override
 	public void onBackPressed() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -147,72 +209,19 @@ public class MenuGrupeActivity extends Activity{
 	    alert.show();
 	}
 	
-	public ArrayList<String> getAllGrupe()
-	{
-	      ArrayList<String> array_list = new ArrayList<String>();
-	      
-	      
-	         
-	         try
-	     	{
-	     		HttpClient httpclient = new DefaultHttpClient();
-	     		//Timeout je u milisekundama
-	    		HttpParams params = httpclient.getParams();
-	    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
-	    		HttpConnectionParams.setSoTimeout(params, info.timeout);
-	    		//
-	 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/grupa.php");
-	 	        //httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-	 	        HttpResponse response = httpclient.execute(httppost); 
-	 	        HttpEntity entity = response.getEntity();
-	 	        is = entity.getContent();
-	 	        Log.e("pass 1", "connection success ");
-	     	}
-	         catch(Exception e)
-	         {
-	         	Log.e("Fail 1", e.toString());
-	 	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
-	 			Toast.LENGTH_LONG).show();
-	         }     
-	         
-	         try
-	         {
-	          	BufferedReader reader = new BufferedReader
-	 				(new InputStreamReader(is,"iso-8859-1"),8);
-	             	StringBuilder sb = new StringBuilder();
-	             	while ((line = reader.readLine()) != null)
-	             	{
-	        		    sb.append(line + "\n");
-	            	}
-	             	is.close();
-	             	result = sb.toString();
-	             	//Log.i("izgled:",result);
-	             	Log.e("pass 2", "connection success ");
-	 		}
-	 	        catch(Exception e)
-	 	    	{
-	 			Log.e("Fail 2", e.toString());
-	 		}     
-	        
-	 		JSONObject jsonResponse;
-	 	
-	 		try {
-	 			jsonResponse = new JSONObject(result);
+	//Za dekodiranje slika
+	private Bitmap base64ToBitmap(String b64) {
+	    byte[] imageAsBytes = Base64.decode(b64.getBytes(), Base64.DEFAULT);
+	    return BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+	}
 
-	 			JSONArray jsonArray = jsonResponse.optJSONArray("grupa");
-	 			id=new String[jsonArray.length()];
-	 			for (int i = 0; i < jsonArray.length(); i++) {
-	 				JSONObject child = jsonArray.getJSONObject(i);
-	 				
-	 				String reg_id = child.getString("grupa_id");
-	 				String naziv=child.getString("naziv");
-	 				id[i]=reg_id;
-	 				array_list.add(naziv);
-	 			}
-	 		} catch (Exception e) {
-	 			// TODO Auto-generated catch block
-	 			Log.i("parser menu:","ne radi");
-	 		}
-	   return array_list;
-	 }
+	public void onItemClick(int mPosition) {
+		GrupeListModel tempValues = ( GrupeListModel ) CustomListViewValuesArr.get(mPosition);
+		info.grupaIDstr=tempValues.getId();
+		info.grupaNaziv=tempValues.getNaziv();
+		
+		Intent nextScreen = new Intent(getApplicationContext(), MenuArtikliActivity.class);
+        startActivity(nextScreen);
+		
+	}
 }

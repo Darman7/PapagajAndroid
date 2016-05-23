@@ -92,9 +92,8 @@ public class MenuArtikliActivity extends Activity{
    	                startActivity(nextScreen);
    			}
         });
-        
-        imeGrupe(info.grupaIDstr);
-   	      
+        nazivXML = (TextView) findViewById(R.id.textViewNaziv);
+		nazivXML.setText(info.grupaNaziv); 	      
    	   }
 		private void setListData(String  grupa_id) {
 		// TODO Auto-generated method stub
@@ -164,70 +163,6 @@ public class MenuArtikliActivity extends Activity{
 	 		}
 		}
 		
-	 	 private void imeGrupe(String idGrupe)
-	     {
-			
-			try
-	     	{
-	     		HttpClient httpclient = new DefaultHttpClient();
-	     		//Timeout je u milisekundama
-	    		HttpParams params = httpclient.getParams();
-	    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
-	    		HttpConnectionParams.setSoTimeout(params, info.timeout);
-	    		//
-	 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/nazivgrupe.php?id="+idGrupe);
-	 	        HttpResponse response = httpclient.execute(httppost); 
-	 	        HttpEntity entity = response.getEntity();
-	 	        is = entity.getContent();
-	 	        Log.e("pass 1", "connection success ");
-	     	}
-	         catch(Exception e)
-	         {
-	         	Log.e("Fail 1", e.toString());
-	 	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
-	 			Toast.LENGTH_LONG).show();
-	         }     
-	         
-	         try
-	         {
-	          	BufferedReader reader = new BufferedReader
-	 				(new InputStreamReader(is,"iso-8859-1"),8);
-	             	StringBuilder sb = new StringBuilder();
-	             	while ((line = reader.readLine()) != null)
-	             	{
-	        		    sb.append(line + "\n");
-	            	}
-	             	is.close();
-	             	result = sb.toString();
-	             	//Log.i("izgled:",result);
-	             	Log.e("pass 2", "connection success ");
-	 		}
-	 	        catch(Exception e)
-	 	    	{
-	 			Log.e("Fail 2", e.toString());
-	 		}     
-	        
-	 		JSONObject jsonResponse;
-	 	
-	 		try {
-	 			jsonResponse = new JSONObject(result);
-
-	 			JSONArray jsonArray = jsonResponse.optJSONArray("grupa");
-	 			
-	 			for (int i = 0; i < jsonArray.length(); i++) {
-	 				JSONObject child = jsonArray.getJSONObject(i);
-
-	 				String naziv=child.getString("naziv");
-	 				//Log.i("naziv grupe:",naziv);
-	 				nazivXML = (TextView) findViewById(R.id.textViewNaziv);
-	 				nazivXML.setText(naziv);	
-	 			}
-	 			
-	 		} catch (Exception e) {
-	 			// TODO Auto-generated catch block
-	 			Log.i("parser za stavke","ne radi");
-	 		}
-	     }
 	 	
 		public void onItemClick(int mPosition) {
 			ArtikliListModel tempValues = ( ArtikliListModel ) CustomListViewValuesArr.get(mPosition);

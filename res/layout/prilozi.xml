@@ -11,7 +11,7 @@
         android:layout_alignLeft="@+id/textNazivArtikla"
         android:layout_below="@+id/textNazivArtikla"
         android:layout_marginTop="25dp"
-        android:text="kolicina:"
+        android:text="količina:"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Button
@@ -218,7 +218,7 @@
         android:layout_alignBottom="@+id/buttonNazad"
         android:layout_alignLeft="@+id/textKolicina"
         android:layout_toLeftOf="@+id/textView1"
-        android:text="PORUDZBA"
+        android:text="PORUDŽBA"
         android:textStyle="bold"
         android:typeface="sans" />
 

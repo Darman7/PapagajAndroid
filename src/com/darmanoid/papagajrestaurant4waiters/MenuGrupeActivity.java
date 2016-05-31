@@ -181,17 +181,19 @@ public class MenuGrupeActivity extends Activity{
 	public void onBackPressed() {
 		AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-	    builder.setTitle("Ponisti porudzbu");
-	    builder.setMessage("Da li zelite da ponistite porudzbu?");
+	    builder.setTitle("Poništi porudžbu");
+	    builder.setMessage("Da li želite da poništite porudžbu?");
  
 	    builder.setPositiveButton("Da", new DialogInterface.OnClickListener() {
 
 	        @Override
 			public void onClick(DialogInterface dialog, int which) {
 	        	info.poruceno.clear();
+	        	info.ukupanIznos="0.0 €";
 	        	Intent nextScreen = new Intent(getApplicationContext(), RegioniActivity.class);
 			    startActivity(nextScreen);
 	            dialog.dismiss();
+	            
 	        }
 
 	    });
@@ -207,7 +209,7 @@ public class MenuGrupeActivity extends Activity{
 
 	    AlertDialog alert = builder.create();
 	    alert.show();
-	}
+	}  
 	
 	//Za dekodiranje slika
 	private Bitmap base64ToBitmap(String b64) {

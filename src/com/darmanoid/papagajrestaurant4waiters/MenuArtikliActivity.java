@@ -172,7 +172,5 @@ public class MenuArtikliActivity extends Activity{
 			
 			Intent nextScreen = new Intent(getApplicationContext(), PriloziActivity.class);
             startActivity(nextScreen);
-            //Toast.makeText(CustomListView,""+tempValues.getNaziv()+" "+tempValues.getId(),Toast.LENGTH_LONG).show();
-			//kasnije da prebaci na drugi ACtivity
 		}
 }

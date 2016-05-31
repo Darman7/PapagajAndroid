@@ -5,7 +5,6 @@ public class ArtikliListModel {
 	private  String naziv;
     private  String cijena;
     private  String id; 
-    
 
 	public ArtikliListModel(String naziv, String cijena, String id) {
 		super();

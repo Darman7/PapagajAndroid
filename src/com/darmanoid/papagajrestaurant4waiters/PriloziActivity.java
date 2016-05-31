@@ -298,8 +298,15 @@ public class PriloziActivity extends Activity{
         dodaj.setOnClickListener(new OnClickListener () {
 			@Override
 			public void onClick(View v) {
+				Toast.makeText(getApplicationContext(), "Stavka je dodata",Toast.LENGTH_SHORT).show();
 				kolicina = (TextView) findViewById(R.id.textKolicina);
-				info.poruceno.add(info.nazivJela+" "+kolicina.getText());
+				info.poruceno.add(info.nazivJela+" | "+kolicina.getText()+" | "+cijena.getText());
+				
+				String cUk=(String) cijena.getText();
+				int duzina=cUk.length();
+				cUk=cUk.substring(0, duzina-1);
+				//Toast.makeText(getApplicationContext(), "test: "+cUk,Toast.LENGTH_LONG).show();
+				info.cijena(cUk);
 			}
         });
         porudzba.setOnClickListener(new OnClickListener () {

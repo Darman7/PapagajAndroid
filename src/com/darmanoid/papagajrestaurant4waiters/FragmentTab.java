@@ -18,6 +18,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -56,7 +57,6 @@ public class FragmentTab extends Fragment {
 		this.regionID = regionID;
 	}
 	
-
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
          
@@ -149,34 +149,94 @@ public class FragmentTab extends Fragment {
 					
 					String sto_id = child.getString("sto_id"); //Paznja kod kasnije generisanja poruka serveru
 					String naziv=child.getString("naziv");
+					String iznos=child.getString("iznos");
+					String zauzeoKonobar=child.getString("kor_ime");
 					
-					final Button button=new Button(getActivity());
+					final CustomButton button=new CustomButton(getActivity());
 					button.setMinWidth(200);
 					button.setMinHeight(160);
+					button.setImeKonobara(zauzeoKonobar);
+					button.setIznos(iznos);
+					button.setNaziv(naziv);
 					tableRow.addView(button);
 					brojStolova--;
 					/*
 					 * Dodajem svojstva dugmadima
 					 */
-					button.setText(naziv); 
+					button.setText(naziv+"\n"+iznos+" €\n"+zauzeoKonobar);
+					if(zauzeoKonobar.equals(""))
+					{	//#7FFF00
+						//0x7FFF0000 neka lijepa crvena :)
+						button.getBackground().setColorFilter(0xFF79ff4d, PorterDuff.Mode.MULTIPLY);
+					}
+					else
+					{
+						button.getBackground().setColorFilter(0xFFFF0000, PorterDuff.Mode.MULTIPLY);
+					}
+					
 					button.setId(id);
-					id++;
+					//id++;
 					button.setLayoutParams(new TableRow.LayoutParams( LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT, 1.0f)); 
 					button.setOnClickListener(new View.OnClickListener() {
 						@Override
 						public void onClick(View arg0) {
 							
 							// TODO Auto-generated method stub
-							Info.stoNaziv=(String) button.getText();
+							Info.stoNaziv=button.getNaziv();
+							Info.stoID=Integer.toString(button.getId());
 							//info.stoID=1;
 							/*
 							 * Regulisati ovdje ili u porudzba Activity id stola ako bude potrebno
 							 */
-							Intent intent = new Intent();
-							intent.setClass(getActivity(), MenuGrupeActivity.class);
-							getActivity().startActivity(intent);
+							if(button.getImeKonobara().equals(info.konobarIme))
+							{
+								Intent intent = new Intent();
+								intent.setClass(getActivity(), MenuGrupeActivity.class);
+								getActivity().startActivity(intent);
+							}
+							else if(button.getImeKonobara().equals(""))
+							{
+								Intent intent = new Intent();
+								intent.setClass(getActivity(), MenuGrupeActivity.class);
+								getActivity().startActivity(intent);
+							}
+							else
+							{
+								Toast.makeText(getActivity(), "Ovaj sto je zauzeo drugi konobar",
+							    Toast.LENGTH_LONG).show();
+							}
 						}
-					});	
+					});
+					
+					button.setOnLongClickListener(new View.OnLongClickListener() {
+				        @Override
+				        public boolean onLongClick(View v) {
+				        	//PLATIO
+				        	
+				        	if(button.getImeKonobara().equals(info.konobarIme))
+				        	{
+				        		Toast.makeText(getActivity(), "Placeno",
+							    Toast.LENGTH_LONG).show();
+				        		//posaljiPlacanje(Integer.toString(button.getId()));
+				        		//Ucitati ponovo stranicu ili rucno mijenjati boju? 
+				        		button.getBackground().setColorFilter(0xFF79ff4d, PorterDuff.Mode.MULTIPLY);
+				        	}
+				        	else if(button.getImeKonobara().equals(""))
+				        	{
+				        		Toast.makeText(getActivity(), "sto je slobodan",
+				        		Toast.LENGTH_LONG).show();
+				        	}
+				        	else
+				        	{
+				        		Toast.makeText(getActivity(), "Ovaj sto opsluzuje drugi konobar",
+							    Toast.LENGTH_LONG).show();
+				        	}
+				        	
+				        	
+				            return true;
+				        }
+				    });
+					
 				}
 			}
 	        brojac=0; //osigurati se
@@ -215,5 +275,30 @@ public class FragmentTab extends Fragment {
 
 	    AlertDialog alert = builder.create();
 	    alert.show();
+	}
+	///Ovo doraditi sa DUJOM! :) 
+	public void posaljiPlacanje(String stoID)
+	{
+		try
+    	{
+    		HttpClient httpclient = new DefaultHttpClient();
+    		//Timeout je u milisekundama
+    		HttpParams params = httpclient.getParams();
+    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+    		//
+	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/sto.php?id="+this.regionID);
+	        HttpResponse response = httpclient.execute(httppost); 
+	        HttpEntity entity = response.getEntity();
+	        is = entity.getContent();
+	        Log.e("pass 1", "connection success ");
+    	}
+        catch(Exception e)
+        {
+        	Log.e("Fail 1", e.toString());
+        	//Potencijalno pucanje
+	    	Toast.makeText(getActivity(), "Konekcija na server nije uspjela!",
+			Toast.LENGTH_LONG).show();
+        }    
 	}
 }

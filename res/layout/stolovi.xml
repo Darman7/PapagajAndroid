@@ -39,7 +39,7 @@
             android:layout_alignBottom="@+id/textViewKONOBAR"
             android:layout_alignParentRight="true"
             android:layout_marginRight="75dp"
-            android:text="Brza porudzba" />
+            android:text="Brza porudžba" />
 
         <Button
             android:id="@+id/buttonLogout"

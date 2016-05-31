@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="42dp"
-        android:text="Administratorska podesavanja"
+        android:text="Administratorska podešavanja"
         android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <EditText

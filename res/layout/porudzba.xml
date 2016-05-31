@@ -22,7 +22,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="28dp"
-        android:text="Zavrsi porudzbu" />
+        android:text="Završi porudžbu" />
 
     <ListView
         android:id="@+id/poruceno"
@@ -43,5 +43,15 @@
         android:layout_marginLeft="30dp"
         android:text="&lt;"
         android:textSize="26sp" />
+
+    <TextView
+        android:id="@+id/textViewIznos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonPotvrdi"
+        android:layout_below="@+id/buttonPotvrdi"
+        android:layout_marginTop="37dp"
+        android:text="Iznos računa: "
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
 </RelativeLayout>

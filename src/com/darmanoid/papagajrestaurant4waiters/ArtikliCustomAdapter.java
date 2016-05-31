@@ -13,8 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
-
+  
 public class ArtikliCustomAdapter extends BaseAdapter   implements OnClickListener {
           
          private Activity activity;

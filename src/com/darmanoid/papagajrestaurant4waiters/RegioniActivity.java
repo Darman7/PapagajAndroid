@@ -113,15 +113,12 @@ public class RegioniActivity extends Activity{
 	        	Fragment noviFragment = new FragmentTab(reg_id); 
 	        	noviTab.setTabListener(new TabListener(noviFragment));
 	        	actionBar.addTab(noviTab);   	
-	        		
 			}
 			
 			if(!(info.regionIDkonabara.equals("")))
 			{
-				int d=jsonArray.length();
-				int q=Integer.parseInt(info.regionIDkonabara);
-				int tag=d+1-q;
-				actionBar.setSelectedNavigationItem(tag);
+				if(info.regionIDkonabara.equals("1"))actionBar.setSelectedNavigationItem(2);
+				else if(info.regionIDkonabara.equals("2"))actionBar.setSelectedNavigationItem(1);
 				Log.i("broj regiona:",info.regionIDkonabara);
 			}
 			//parsirani.setText(output);

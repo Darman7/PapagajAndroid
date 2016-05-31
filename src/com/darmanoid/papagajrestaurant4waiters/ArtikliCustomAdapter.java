@@ -21,8 +21,7 @@ public class ArtikliCustomAdapter extends BaseAdapter   implements OnClickListen
          private static LayoutInflater inflater=null;
          public Resources res;
          ArtikliListModel tempValues=null;
-         int i=0;
-          
+         int i=0;   
          //konstruktor
          public ArtikliCustomAdapter(Activity a, ArrayList d,Resources resLocal) {
                  activity=a;
@@ -104,7 +103,7 @@ public class ArtikliCustomAdapter extends BaseAdapter   implements OnClickListen
           
          @Override
          public void onClick(View v) {
-                 Log.v("CustomAdapter", "Klik na stavku");
+                 //Log.v("CustomAdapter", "Klik na stavku");
                  //Ovo mijenjati kasnije, tj da predje na activity, a mogu i u Activity iz kojeg zovem
          }
           

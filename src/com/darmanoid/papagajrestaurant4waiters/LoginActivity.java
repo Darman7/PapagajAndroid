@@ -143,6 +143,7 @@ public class LoginActivity extends Activity {
 				info.konobarKartica=child.getString("kartica");
 				info.konobarIme=child.getString("ime");
 				info.regionIDkonabara=child.getString("region_id");
+				info.konobarID=child.getString("korisnik_id");
 				postoji=true;
 			}
 			else 

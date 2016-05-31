@@ -14,21 +14,22 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class GrupeCustomAdapter  extends BaseAdapter   implements OnClickListener {
+
+public class PorudzbaCustomAdapter extends BaseAdapter   implements OnClickListener {
     
    private Activity activity;
    private ArrayList data;
    private static LayoutInflater inflater=null;
    public Resources res;
-   GrupeListModel tempValues=null;
+   PorudzbaListModel tempValues=null;
    int i=0;
-    
    //konstruktor
-   public GrupeCustomAdapter(Activity a, ArrayList d,Resources resLocal) {
+   public PorudzbaCustomAdapter(Activity a, ArrayList d,Resources resLocal) {
            activity=a;
            data=d;
            res=resLocal;
-           inflater=(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);   
+           inflater=(LayoutInflater)activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        
    }
 
    //Velicina predate array liste
@@ -50,9 +51,9 @@ public class GrupeCustomAdapter  extends BaseAdapter   implements OnClickListene
    //Povezivanje sa XML-om
    public static class ViewHolder{
         
+       public TextView kolicina;
        public TextView naziv;
-       public TextView textWide;
-       public ImageView image;
+       public TextView cijena;
 
    }
 
@@ -63,11 +64,12 @@ public class GrupeCustomAdapter  extends BaseAdapter   implements OnClickListene
         
        if(convertView==null){
 
-           vi = inflater.inflate(R.layout.grupa, null);
+           vi = inflater.inflate(R.layout.porudzba_elem, null);
             
            holder = new ViewHolder();
-           holder.naziv = (TextView) vi.findViewById(R.id.textNaziv);
-           holder.image=(ImageView)vi.findViewById(R.id.imageViewSLIKA);
+           holder.kolicina = (TextView) vi.findViewById(R.id.textKolicina);
+           holder.naziv=(TextView)vi.findViewById(R.id.textNaziv);
+           holder.cijena=(TextView)vi.findViewById(R.id.textCijena);
 
            vi.setTag( holder );
        }
@@ -83,14 +85,12 @@ public class GrupeCustomAdapter  extends BaseAdapter   implements OnClickListene
        {
            //dohvata svaki element iz array liste
            tempValues=null;
-           tempValues = ( GrupeListModel ) data.get( position );
+           tempValues = ( PorudzbaListModel ) data.get( position );
             
            
             holder.naziv.setText(tempValues.getNaziv());
-            //holder.cijena.setText(tempValues.getCijena());
-            holder.image.setImageBitmap(tempValues.getImage());
-             
-            
+            holder.cijena.setText(tempValues.getCijena());
+            holder.kolicina.setText(tempValues.getKolicina());
             vi.setOnClickListener(new OnItemClickListener(position));
        }
        return vi;
@@ -111,7 +111,7 @@ public class GrupeCustomAdapter  extends BaseAdapter   implements OnClickListene
    @Override
    public void onClick(View arg0) {
       	 
-  	 MenuGrupeActivity sct = (MenuGrupeActivity)activity;
+  	 PorudzbaActivity sct = (PorudzbaActivity)activity;
        sct.onItemClick(mPosition);
    }               
 }   

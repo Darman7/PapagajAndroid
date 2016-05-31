@@ -1,0 +1,48 @@
+<TableRow xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableRow1"
+    android:layout_width="fill_parent"
+    android:layout_height="150dp"
+    android:paddingBottom="12dp"
+    android:paddingTop="12dp"
+    android:stretchColumns="*" >
+	
+    <TextView
+        android:id="@+id/textKolicina"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:minWidth="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minWidth="50dp"
+        android:paddingLeft="5dp"
+        android:text="X"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textNaziv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxWidth="380dp"
+        android:minWidth="350dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textCijena"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="5dp"
+        android:text="€"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+	
+</TableRow>

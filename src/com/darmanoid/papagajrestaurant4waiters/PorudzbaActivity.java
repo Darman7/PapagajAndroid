@@ -1,30 +1,51 @@
 package com.darmanoid.papagajrestaurant4waiters;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.os.StrictMode;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class PorudzbaActivity extends Activity {
 		Info info;
 		Button nazad;
 		Button potvrdi;
 		TextView racun;
-		private ListView obj;
+		InputStream is=null;
+		String result=null;
+		String line=null;
 		
+		ListView lista;
+		float iznos_racuna=0;
+	    PorudzbaCustomAdapter adapter;
+	    public  PorudzbaActivity CustomListView = null;
+	    public  ArrayList<PorudzbaListModel> CustomListViewValuesArr = new ArrayList<PorudzbaListModel>();
+	    
 		protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -32,29 +53,89 @@ public class PorudzbaActivity extends Activity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy); 
         
-        postaviDugmad();
-        ArrayList array_list = info.poruceno;
-        final ArrayAdapter arrayAdapter=new ArrayAdapter(this,android.R.layout.simple_list_item_1, array_list);
+        CustomListView = this; //dodato
+        setListData(info.konobarID,info.stoID);
         
-        obj = (ListView)findViewById(R.id.poruceno);
-   	 	obj.setAdapter(arrayAdapter);
-   	 	obj.setOnItemLongClickListener(new OnItemLongClickListener(){
-   	         @Override
-   	         public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-   	        	//Toast.makeText(getApplicationContext(), "Ukloni ga", Toast.LENGTH_SHORT).show();
-   	        	String item = (String) arrayAdapter.getItem(position);
-                arrayAdapter.remove(arrayAdapter.getItem(position));
-                arrayAdapter.notifyDataSetChanged();
-   	        	return true;
-   	         }
-   	         
-   	      });
-   	      
-
-   	 	racun=(TextView)findViewById(R.id.textViewIznos);
-   	 	racun.setText("Iznos računa: "+info.ukupanIznos);
+        Resources res =getResources();
+        lista= ( ListView )findViewById(R.id.poruceno);          
+        adapter=new PorudzbaCustomAdapter( CustomListView, CustomListViewValuesArr,res );
+        lista.setAdapter(adapter);
+        
+        postaviDugmad();
+        racun=(TextView)findViewById(R.id.textViewIznos);
+        DecimalFormat df = new DecimalFormat("0.00");
+		df.setMaximumFractionDigits(2);
+		racun.setText("Iznos računa: "+df.format(iznos_racuna)+" €");
    	 	
     }
+	private void setListData(String konobar_id,String sto_id) {
+		try 
+     	{
+      		
+     		HttpClient httpclient = new DefaultHttpClient();
+     		//Timeout je u milisekundama
+    		HttpParams params = httpclient.getParams();
+    		HttpConnectionParams.setConnectionTimeout(params, info.timeout);
+    		HttpConnectionParams.setSoTimeout(params, info.timeout);
+    		//
+ 	        HttpPost httppost = new HttpPost("http://"+info.ip+"/papagaj/porudzba.php?sto_id="+sto_id+"&korisnik_id="+konobar_id);
+ 	        Log.e("sto id:", sto_id);
+ 	        
+ 	        HttpResponse response = httpclient.execute(httppost); 
+ 	        HttpEntity entity = response.getEntity();
+ 	        is = entity.getContent();
+ 	        Log.e("pass 1", "connection success ");
+     	}
+         catch(Exception e)
+         {
+         	Log.e("Fail 1", e.toString());
+ 	    	Toast.makeText(getApplicationContext(), "Konekcija na server nije uspjela!",
+ 			Toast.LENGTH_LONG).show();
+         }     
+         
+         try
+         {
+          	BufferedReader reader = new BufferedReader
+ 				(new InputStreamReader(is,"iso-8859-1"),8);
+             	StringBuilder sb = new StringBuilder();
+             	while ((line = reader.readLine()) != null)
+ 		{
+        		    sb.append(line + "\n");
+            	}
+             	is.close();
+             	result = sb.toString();
+             	//Log.i("izgled:",result);
+             	Log.e("pass 2", "connection success ");
+ 		}
+ 	        catch(Exception e)
+ 	    	{
+ 			Log.e("Fail 2", e.toString());
+ 		}     
+        
+ 		JSONObject jsonResponse;
+ 	
+ 		try {
+ 			jsonResponse = new JSONObject(result);
+
+ 			JSONArray jsonArray = jsonResponse.optJSONArray("porudzba");
+ 			//Log.i("stavke JSON:",result);
+ 			for (int i = 0; i < jsonArray.length(); i++) {
+ 				JSONObject child = jsonArray.getJSONObject(i);
+ 				
+ 				String kolicina=child.getString("kolicina");
+ 				String naziv=child.getString("artikal");
+ 				String cijena=child.getString("cijena");
+ 				iznos_racuna=iznos_racuna+Float.parseFloat(cijena);
+ 				PorudzbaListModel stavka = new PorudzbaListModel(kolicina,naziv,cijena);
+ 				CustomListViewValuesArr.add( stavka );
+ 			}
+ 			
+ 		} catch (Exception e) {
+ 			// TODO Auto-generated catch block
+ 			Log.i("parser porudzba:","ne radi");
+ 		}
+			
+		}
 	private void postaviDugmad()
 	{
 		 	nazad = (Button) findViewById(R.id.buttonNazad);
@@ -70,9 +151,7 @@ public class PorudzbaActivity extends Activity {
 				//Sredjivati kasnije 
 				public void onClick(View v) {
 					porukaServeru(); 
-					info.poruceno.clear();
-					info.ukupanIznos="0.0 €";
-					//info.ocisti(); // WUT?
+					
 					Toast.makeText(getApplicationContext(), "Porudzba zavrsena!", Toast.LENGTH_SHORT).show();
 					Intent nextScreen = new Intent(getApplicationContext(), RegioniActivity.class);
 		 		    startActivity(nextScreen);
@@ -82,6 +161,10 @@ public class PorudzbaActivity extends Activity {
 	//Praviti moj JSON i proslijediti ga serveru
 	private void porukaServeru()
 	{
+		
+	}
+	public void onItemClick(int mPosition) {
+		// TODO Auto-generated method stub
 		
 	}
 }

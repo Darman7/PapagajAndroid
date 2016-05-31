@@ -11,10 +11,12 @@ public class Info {
 	
 	//Ovdje ubaciti prvatni IP servera
 	public static String ip="192.168.43.196";
-	public static int timeout=5000; 
+	public static int timeout=3000; 
 	   
 	public static String konobarKartica;
-	public static String konobarIme; 
+	public static String konobarIme;
+	public static String konobarID;
+	
 	public static String regionIDkonabara;
 	
 	public static String grupaIDstr;
@@ -34,7 +36,7 @@ public class Info {
 	{
 		this.jeloID=null;
 		this.nazivJela=null;
-		this.cijena=null;
+		this.cijena=null; 
 		this.stoNaziv=null;
 		this.ukupanIznos="0.0 €";
 	}

@@ -72,6 +72,7 @@ public class FragmentTab extends Fragment {
 				public void onClick(View v) {
 					// TODO Auto-generated method stub
 					Info.stoNaziv="brza porudzba";
+					Info.stoID=""; //Dujo ovako rece da treba
 					Intent intent = new Intent();
 					intent.setClass(getActivity(), MenuGrupeActivity.class);
 					getActivity().startActivity(intent);
@@ -152,7 +153,7 @@ public class FragmentTab extends Fragment {
 					String iznos=child.getString("iznos");
 					String zauzeoKonobar=child.getString("kor_ime");
 					
-					final CustomButton button=new CustomButton(getActivity());
+					final StoButton button=new StoButton(getActivity(),sto_id);
 					button.setMinWidth(200);
 					button.setMinHeight(160);
 					button.setImeKonobara(zauzeoKonobar);
@@ -183,7 +184,7 @@ public class FragmentTab extends Fragment {
 							
 							// TODO Auto-generated method stub
 							Info.stoNaziv=button.getNaziv();
-							Info.stoID=Integer.toString(button.getId());
+							Info.stoID=button.getIdStola();
 							//info.stoID=1;
 							/*
 							 * Regulisati ovdje ili u porudzba Activity id stola ako bude potrebno

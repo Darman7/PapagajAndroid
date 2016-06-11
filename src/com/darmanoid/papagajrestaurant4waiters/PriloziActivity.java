@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DecimalFormat;
+import java.util.HashMap;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -16,9 +17,11 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.PorterDuff;
 import android.graphics.Typeface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.Layout;
@@ -229,6 +232,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("1 X");
+				info.kolicina="1";
 				racunaj(1);
 			}
         });
@@ -236,6 +240,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("2 X");
+				info.kolicina="2";
 				racunaj(2);
 			}
         });
@@ -243,6 +248,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("3 X");
+				info.kolicina="3";
 				racunaj(3);
 			}
         });
@@ -250,6 +256,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("4 X");
+				info.kolicina="4";
 				racunaj(4);
 			}
         });
@@ -257,6 +264,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("5 X");
+				info.kolicina="5";
 				racunaj(5);
 			}
         });
@@ -264,6 +272,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("6 X");
+				info.kolicina="6";
 				racunaj(6);
 			}
         });
@@ -271,6 +280,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("7 X");
+				info.kolicina="7";
 				racunaj(7);
 			}
         });
@@ -278,6 +288,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("8 X");
+				info.kolicina="8";
 				racunaj(8);
 			}
         });
@@ -285,6 +296,7 @@ public class PriloziActivity extends Activity{
 			@Override
 			public void onClick(View v) {
 				kolicina.setText("9 X");
+				info.kolicina="9";
 				racunaj(9);
 			}
         });
@@ -300,14 +312,11 @@ public class PriloziActivity extends Activity{
 			public void onClick(View v) {
 				Toast.makeText(getApplicationContext(), "Stavka je dodata",Toast.LENGTH_SHORT).show();
 				kolicina = (TextView) findViewById(R.id.textKolicina);
-				//info.poruceno.add(info.nazivJela+" | "+kolicina.getText()+" | "+cijena.getText());
-				
-				//String cUk=(String) cijena.getText();
-				//int duzina=cUk.length();
-				//cUk=cUk.substring(0, duzina-1);
-				//Toast.makeText(getApplicationContext(), "test: "+cUk,Toast.LENGTH_LONG).show();
-				//info.cijena(cUk);
+				//dodajUtempBazu();
+				dodajStavku();
 			}
+
+			
         });
         porudzba.setOnClickListener(new OnClickListener () {
 			@Override
@@ -318,4 +327,45 @@ public class PriloziActivity extends Activity{
         });
         
 	}
+	private void dodajStavku(){
+		 
+        //final String name = editTextName.getText().toString().trim();
+        //final String desg = editTextDesg.getText().toString().trim();
+        //final String sal = editTextSal.getText().toString().trim();
+ 
+        class AddEmployee extends AsyncTask<Void,Void,String>{
+ 
+            ProgressDialog loading;
+ 
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(PriloziActivity.this,"Adding...","Wait...",false,false);
+            }
+ 
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(PriloziActivity.this,s,Toast.LENGTH_LONG).show();
+            }
+ 
+            @Override
+            protected String doInBackground(Void... v) {
+                HashMap<String,String> params = new HashMap<>();
+                params.put("sto_id",info.stoID);
+                params.put("korisnik_id",info.konobarID);
+                params.put("artikal_id",info.jeloID);
+                params.put("kolicina",info.kolicina);
+ 
+                RequestHandler rh = new RequestHandler();
+                String res = rh.sendPostRequest("http://"+info.ip+"/papagaj/stavka.php", params);
+                return res;
+            }
+        }
+ 
+        AddEmployee ae = new AddEmployee();
+        ae.execute();
+    }
+ 
 }

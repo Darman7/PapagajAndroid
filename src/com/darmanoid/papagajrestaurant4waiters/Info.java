@@ -10,7 +10,7 @@ public class Info {
 	 */
 	
 	//Ovdje ubaciti prvatni IP servera
-	public static String ip="192.168.43.196";
+	public static String ip="192.168.1.77";
 	public static int timeout=3000; 
 	   
 	public static String konobarKartica;
@@ -29,6 +29,7 @@ public class Info {
 	public static String jeloID;
 	public static String nazivJela;
 	public static String cijena;
+	public static String kolicina;
 	public static String ukupanIznos="0.0 €";
 	
 	public static ArrayList<String> poruceno=new ArrayList();

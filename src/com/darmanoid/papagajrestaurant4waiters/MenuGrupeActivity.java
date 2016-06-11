@@ -47,11 +47,11 @@ public class MenuGrupeActivity extends Activity{
 	TextView konobarIme;
 	Button ponisti;
 	Button vratiSe;
-	Button porudzba;
+	Button porudzba;   
 	Info info;
-	InputStream is=null;
+	InputStream is=null; 
 	String result=null;
-	String line=null;
+	String line=null; 
 	String slika=null;
 	
 	ListView lista;
@@ -63,7 +63,7 @@ public class MenuGrupeActivity extends Activity{
 		 
      super.onCreate(savedInstanceState);
      requestWindowFeature(Window.FEATURE_NO_TITLE);
-     setContentView(R.layout.menu);
+     setContentView(R.layout.menunovi); 
      
      
      CustomListView = this; //dodato
@@ -84,24 +84,11 @@ public class MenuGrupeActivity extends Activity{
      ponisti.setOnClickListener(new OnClickListener () {
 			@Override
 			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				onBackPressed();
+				// TODO Auto-generated method stub 
+				onBackPressed(); 
 			}
-     });
+     });  
      
-     vratiSe = (Button) findViewById(R.id.buttonforward);
-     vratiSe.setOnClickListener(new OnClickListener () {
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				if(info.grupaID!=-1)
-				{
-					Intent nextScreen = new Intent(getApplicationContext(), MenuArtikliActivity.class);
-	                startActivity(nextScreen);
-				}
-				
-			}
-     });
      porudzba = (Button) findViewById(R.id.buttonPorudzba);
      porudzba.setOnClickListener(new OnClickListener () {
 			@Override

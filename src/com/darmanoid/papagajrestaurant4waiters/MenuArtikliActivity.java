@@ -21,13 +21,12 @@ import android.content.res.Resources;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.view.Window;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 
 public class MenuArtikliActivity extends Activity{
 
@@ -57,7 +56,7 @@ public class MenuArtikliActivity extends Activity{
 		
         super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_NO_TITLE);
-        setContentView(R.layout.menu);
+        setContentView(R.layout.menunovi);
 
         CustomListView = this; //dodato
         setListData(info.grupaIDstr);
